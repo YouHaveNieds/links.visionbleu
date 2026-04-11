@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vision Bleu LED — Concept C · The Monograph Cover</title>
+<meta name="description" content="Chef de file canadien en éclairage permanent.">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%2349b3d0'/></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* =========================================================
+     CONCEPT C — The Monograph Cover
+     Luxury watch brand. Oversized logomark with breathing halo.
+     Wide-tracked wordmark. Gold rules framing "BLEU".
+     Italic serif tagline.
+     ========================================================= */
+
+  @property --halo {
+    syntax: "<number>";
+    initial-value: 0;
+    inherits: false;
+  }
+
+  :root {
+    --midnight:       #07080f;
+    --midnight-2:     #0b0d16;
+    --ink:            #020308;
+    --surface:        rgba(255, 255, 255, 0.04);
+    --surface-hover:  rgba(255, 255, 255, 0.065);
+    --border:         rgba(255, 255, 255, 0.09);
+
+    --blue:           #49b3d0;
+    --blue-rgb:       73, 179, 208;
+    --blue-light:     #8fdcef;
+
+    --gold:           #c8a44e;
+    --gold-rgb:       200, 164, 78;
+    --gold-light:     #e6cc86;
+    --gold-deep:      #8e6f2b;
+
+    --text-primary:   #f4f0e8;
+    --text-secondary: #a49e92;
+    --text-muted:     #6b655a;
+
+    --serif: 'Fraunces', 'Times New Roman', Georgia, serif;
+    --sans:  'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    --radius-btn: 10px;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--ink);
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* ---------- Rich midnight background ---------- */
+  .atmosphere {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 30%, rgba(var(--blue-rgb), 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 50% 10%, rgba(var(--gold-rgb), 0.05) 0%, transparent 70%),
+      radial-gradient(ellipse 100% 70% at 50% 100%, rgba(var(--gold-rgb), 0.03), transparent 60%),
+      linear-gradient(180deg, var(--midnight) 0%, var(--ink) 70%);
+  }
+
+  .grain {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* =========================================================
+     Gold corner ornaments — bracket the whole page
+     ========================================================= */
+  .corner {
+    position: fixed;
+    z-index: 3;
+    width: 22px;
+    height: 22px;
+    pointer-events: none;
+    opacity: 0;
+    animation: corner-appear 900ms cubic-bezier(0.2, 0, 0, 1) 200ms forwards;
+  }
+
+  .corner::before,
+  .corner::after {
+    content: "";
+    position: absolute;
+    background: var(--gold);
+    box-shadow: 0 0 6px rgba(var(--gold-rgb), 0.35);
+  }
+
+  .corner::before { width: 100%; height: 1px; }
+  .corner::after  { width: 1px; height: 100%; }
+
+  .corner-tl { top: 14px; left: 14px; }
+  .corner-tl::before { top: 0; left: 0; }
+  .corner-tl::after  { top: 0; left: 0; }
+
+  .corner-tr { top: 14px; right: 14px; }
+  .corner-tr::before { top: 0; right: 0; }
+  .corner-tr::after  { top: 0; right: 0; }
+
+  .corner-bl { bottom: 14px; left: 14px; }
+  .corner-bl::before { bottom: 0; left: 0; }
+  .corner-bl::after  { bottom: 0; left: 0; }
+
+  .corner-br { bottom: 14px; right: 14px; }
+  .corner-br::before { bottom: 0; right: 0; }
+  .corner-br::after  { bottom: 0; right: 0; }
+
+  @keyframes corner-appear {
+    from { opacity: 0; transform: scale(0.6); }
+    to   { opacity: 0.85; transform: scale(1); }
+  }
+
+  /* =========================================================
+     Page container — the monograph cover
+     ========================================================= */
+  .cover {
+    position: relative;
+    z-index: 2;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 36px 24px 56px;
+    min-height: 100vh;
+  }
+
+  /* Top identifier */
+  .identifier {
+    text-align: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    color: var(--text-muted);
+    padding-bottom: 32px;
+    animation: fade-in 800ms cubic-bezier(0.2, 0, 0, 1) 300ms both;
+  }
+
+  .identifier .sep {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    vertical-align: middle;
+    margin: 0 10px 3px;
+    box-shadow: 0 0 4px rgba(var(--gold-rgb), 0.5);
+  }
+
+  /* =========================================================
+     HERO — oversized logomark with breathing halo
+     ========================================================= */
+  .hero {
+    text-align: center;
+    padding: 16px 0 44px;
+    position: relative;
+  }
+
+  /* The logomark — large circular with halo */
+  .logomark {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 36px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.06), transparent 60%),
+      linear-gradient(145deg, #0d1020 0%, #040510 100%);
+    border: 1px solid rgba(var(--gold-rgb), 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    animation: logomark-reveal 1200ms cubic-bezier(0.2, 0, 0, 1) 500ms both;
+  }
+
+  /* Breathing halo — outer glow that pulses */
+  .logomark::before {
+    content: "";
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(var(--blue-rgb), 0.28) 0%,
+      rgba(var(--blue-rgb), 0.12) 35%,
+      transparent 70%
+    );
+    filter: blur(16px);
+    z-index: -1;
+    opacity: calc(0.55 + var(--halo) * 0.45);
+    transform: scale(calc(1 + var(--halo) * 0.08));
+    animation: halo-breathe 6s ease-in-out infinite;
+  }
+
+  /* Inner gold ring */
+  .logomark::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    border: 1px solid rgba(var(--gold-rgb), 0.18);
+    pointer-events: none;
+  }
+
+  .logomark-inner {
+    width: 76px;
+    height: auto;
+    filter: brightness(1.1) drop-shadow(0 0 8px rgba(var(--blue-rgb), 0.3));
+    z-index: 1;
+  }
+
+  .logomark-fallback {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    color: var(--blue-light);
+    line-height: 1.2;
+    text-align: center;
+    text-transform: uppercase;
+    display: none;
+    z-index: 1;
+  }
+
+  @keyframes logomark-reveal {
+    from { opacity: 0; transform: scale(0.8); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes halo-breathe {
+    0%, 100% { --halo: 0; }
+    50%      { --halo: 1; }
+  }
+
+  /* Wordmark — wide-tracked, stacked */
+  .wordmark {
+    font-family: var(--serif);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--text-primary);
+  }
+
+  .wordmark-vision {
+    display: block;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0.44em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 18px;
+    padding-left: 0.44em;
+    animation: fade-up 900ms cubic-bezier(0.2, 0, 0, 1) 900ms both;
+  }
+
+  /* BLEU — the hero word, framed by gold rules */
+  .wordmark-bleu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin: 0 auto;
+    animation: fade-up 1000ms cubic-bezier(0.2, 0, 0, 1) 1100ms both;
+  }
+
+  .wordmark-bleu .rule {
+    flex: 1;
+    max-width: 70px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold) 50%, transparent);
+    box-shadow: 0 0 6px rgba(var(--gold-rgb), 0.3);
+    position: relative;
+  }
+
+  .wordmark-bleu .rule::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 5px;
+    height: 5px;
+    background: var(--gold);
+    border-radius: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 0 8px rgba(var(--gold-rgb), 0.6);
+  }
+
+  .wordmark-bleu .rule.left::before  { right: 0; }
+  .wordmark-bleu .rule.right::before { left: 0; }
+
+  .wordmark-bleu .bleu {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(2.75rem, 12vw, 4rem);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    background: linear-gradient(180deg, #ffffff 0%, #d2ebf3 55%, var(--blue) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 4px 20px rgba(var(--blue-rgb), 0.25));
+  }
+
+  .wordmark-led {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-top: 22px;
+    padding-left: 0.5em;
+    animation: fade-up 900ms cubic-bezier(0.2, 0, 0, 1) 1300ms both;
+  }
+
+  /* Italic serif tagline */
+  .hero-tagline {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 340px;
+    margin: 32px auto 0;
+    line-height: 1.55;
+    animation: fade-up 1000ms cubic-bezier(0.2, 0, 0, 1) 1500ms both;
+  }
+
+  .hero-tagline em {
+    color: var(--text-primary);
+    font-style: italic;
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Ornamental divider */
+  .divider-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin: 48px auto 36px;
+    animation: fade-in 1000ms cubic-bezier(0.2, 0, 0, 1) 1800ms both;
+  }
+
+  .divider-ornament .line {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold) 50%, transparent);
+  }
+
+  .divider-ornament .diamond {
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    box-shadow: 0 0 8px rgba(var(--gold-rgb), 0.5);
+  }
+
+  /* =========================================================
+     Link sections
+     ========================================================= */
+  .sections {
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+  }
+
+  .section {
+    animation: fade-up 900ms cubic-bezier(0.2, 0, 0, 1) both;
+  }
+
+  .section:nth-child(1) { animation-delay: 2000ms; }
+  .section:nth-child(2) { animation-delay: 2150ms; }
+  .section:nth-child(3) { animation-delay: 2300ms; }
+  .section:nth-child(4) { animation-delay: 2450ms; }
+
+  .section-head {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .section-label {
+    display: inline-block;
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.875rem;
+    color: var(--gold-light);
+    letter-spacing: 0.04em;
+    position: relative;
+    padding: 0 24px;
+  }
+
+  .section-label::before,
+  .section-label::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 14px;
+    height: 1px;
+    background: rgba(var(--gold-rgb), 0.5);
+    transform: translateY(-50%);
+  }
+
+  .section-label::before { right: 100%; }
+  .section-label::after  { left: 100%; }
+
+  .section-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* =========================================================
+     Buttons — luxury card with hairline + inset highlight
+     ========================================================= */
+  .btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 17px 20px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
+    border: 1px solid var(--border);
+    border-radius: var(--radius-btn);
+    color: var(--text-primary);
+    text-decoration: none;
+    font-family: var(--sans);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.07),
+      0 1px 0 rgba(0, 0, 0, 0.4),
+      0 4px 12px rgba(0, 0, 0, 0.2);
+    transition:
+      border-color 250ms cubic-bezier(0.2, 0, 0, 1),
+      background 250ms cubic-bezier(0.2, 0, 0, 1),
+      transform 250ms cubic-bezier(0.2, 0, 0, 1),
+      box-shadow 320ms cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  /* Gold shimmer that crosses the button on hover */
+  .btn::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(
+      100deg,
+      transparent 20%,
+      rgba(var(--gold-rgb), 0.15) 50%,
+      transparent 80%
+    );
+    transition: left 700ms cubic-bezier(0.2, 0, 0, 1);
+    pointer-events: none;
+  }
+
+  .btn:hover,
+  .btn:focus-visible {
+    border-color: rgba(var(--gold-rgb), 0.4);
+    background: var(--surface-hover);
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 10px 28px rgba(0, 0, 0, 0.35),
+      0 0 0 1px rgba(var(--gold-rgb), 0.15);
+  }
+
+  .btn:hover::after,
+  .btn:focus-visible::after {
+    left: 120%;
+  }
+
+  .btn:focus-visible { outline: none; }
+  .btn:active { transform: translateY(-1px); }
+
+  .btn-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--blue-light);
+    flex-shrink: 0;
+    stroke-width: 1.5;
+  }
+
+  .btn-label {
+    flex: 1;
+    letter-spacing: 0.005em;
+  }
+
+  .btn-arrow {
+    width: 15px;
+    height: 15px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    stroke-width: 1.5;
+    transition: transform 250ms cubic-bezier(0.2, 0, 0, 1), color 250ms;
+  }
+
+  .btn:hover .btn-arrow,
+  .btn:focus-visible .btn-arrow {
+    color: var(--gold-light);
+    transform: translateX(3px);
+  }
+
+  /* CTA — the gold button */
+  .btn--cta {
+    background:
+      linear-gradient(180deg, rgba(var(--gold-rgb), 0.1), rgba(var(--gold-rgb), 0.025));
+    border-color: rgba(var(--gold-rgb), 0.38);
+  }
+
+  .btn--cta .btn-icon { color: var(--gold-light); }
+
+  .btn--cta:hover,
+  .btn--cta:focus-visible {
+    background:
+      linear-gradient(180deg, rgba(var(--gold-rgb), 0.18), rgba(var(--gold-rgb), 0.05));
+    border-color: rgba(var(--gold-rgb), 0.65);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.15),
+      0 12px 32px rgba(var(--gold-rgb), 0.2),
+      0 0 0 1px rgba(var(--gold-rgb), 0.3);
+  }
+
+  .btn.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* =========================================================
+     Phone — elegant centerpiece
+     ========================================================= */
+  .phone-block {
+    text-align: center;
+    margin-top: 48px;
+    padding: 30px 20px;
+    border-top: 1px solid rgba(var(--gold-rgb), 0.2);
+    border-bottom: 1px solid rgba(var(--gold-rgb), 0.2);
+    animation: fade-up 900ms cubic-bezier(0.2, 0, 0, 1) 2600ms both;
+  }
+
+  .phone-label {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 10px;
+    letter-spacing: 0.08em;
+  }
+
+  .phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--serif);
+    font-size: 1.375rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 250ms;
+  }
+
+  .phone:hover { color: var(--gold-light); }
+
+  .phone svg {
+    width: 17px;
+    height: 17px;
+    stroke-width: 1.5;
+    color: var(--gold);
+  }
+
+  /* =========================================================
+     Socials
+     ========================================================= */
+  .socials {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 32px;
+    animation: fade-up 900ms cubic-bezier(0.2, 0, 0, 1) 2750ms both;
+  }
+
+  .social {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-btn);
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 250ms cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .social:hover,
+  .social:focus-visible {
+    color: var(--gold-light);
+    border-color: rgba(var(--gold-rgb), 0.5);
+    background: rgba(var(--gold-rgb), 0.06);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(var(--gold-rgb), 0.15);
+    outline: none;
+  }
+
+  .social svg {
+    width: 17px;
+    height: 17px;
+    stroke-width: 1.5;
+  }
+
+  /* Footer sign-off */
+  .signoff {
+    text-align: center;
+    margin-top: 44px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    animation: fade-in 1000ms 2900ms both;
+  }
+
+  .signoff .diamond {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    vertical-align: middle;
+    margin: 0 12px 3px;
+    box-shadow: 0 0 6px rgba(var(--gold-rgb), 0.5);
+  }
+
+  /* =========================================================
+     Responsive
+     ========================================================= */
+  @media (min-width: 640px) {
+    .cover { padding: 48px 40px 64px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .logomark::before { --halo: 0.5; }
+  }
+</style>
+</head>
+<body>
+
+<div class="atmosphere" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- Gold corner ornaments -->
+<div class="corner corner-tl" aria-hidden="true"></div>
+<div class="corner corner-tr" aria-hidden="true"></div>
+<div class="corner corner-bl" aria-hidden="true"></div>
+<div class="corner corner-br" aria-hidden="true"></div>
+
+<main class="cover">
+
+  <!-- Identifier -->
+  <div class="identifier" aria-hidden="true">
+    Volume I <span class="sep"></span> Montréal <span class="sep"></span> MMXXV
+  </div>
+
+  <!-- Hero — the monograph cover -->
+  <header class="hero">
+
+    <div class="logomark" role="img" aria-label="Logo Vision Bleu LED">
+      <img
+        class="logomark-inner"
+        src="../assets/logo-white.png"
+        alt=""
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+      >
+      <span class="logomark-fallback">Vision<br>Bleu</span>
+    </div>
+
+    <h1 class="wordmark" aria-label="Vision Bleu LED">
+      <span class="wordmark-vision">Vision</span>
+      <span class="wordmark-bleu">
+        <span class="rule left" aria-hidden="true"></span>
+        <span class="bleu">Bleu</span>
+        <span class="rule right" aria-hidden="true"></span>
+      </span>
+      <span class="wordmark-led">L E D</span>
+    </h1>
+
+    <p class="hero-tagline">
+      Chef de file canadien en <em>éclairage permanent</em>.<br>
+      Conception, installation et service.
+    </p>
+
+  </header>
+
+  <!-- Ornamental divider -->
+  <div class="divider-ornament" aria-hidden="true">
+    <span class="line"></span>
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+
+  <!-- Link sections -->
+  <nav class="sections" aria-label="Liens rapides">
+
+    <section class="section" aria-labelledby="c-sec-1">
+      <div class="section-head">
+        <span class="section-label" id="c-sec-1">Pour commencer</span>
+      </div>
+      <div class="section-items">
+        <a href="https://api.leadconnectorhq.com/widget/bookings/vb-inboundsocial" target="_blank" rel="noopener" class="btn btn--cta" aria-label="Réservez un appel avec Vision Bleu LED">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          <span class="btn-label">Réservez un appel</span>
+          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </a>
+
+        <a href="https://visionbleu.com/contact-us" target="_blank" rel="noopener" class="btn btn--cta" aria-label="Contactez Vision Bleu LED">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          <span class="btn-label">Contactez-nous</span>
+          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="c-sec-2">
+      <div class="section-head">
+        <span class="section-label" id="c-sec-2">Découvrez nos projets</span>
+      </div>
+      <div class="section-items">
+        <a href="https://drive.google.com/drive/folders/1gJs0i7pVBrajoAwDkUrMWMvkb7MgQSRE" target="_blank" rel="noopener" class="btn" aria-label="Voir les projets d'éclairage résidentiel">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <span class="btn-label">Projets d'éclairage résidentiel</span>
+          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </a>
+
+        <a href="https://drive.google.com/drive/folders/1HRQdmgICVF1gLPXoF-ZtIwMuLrPWMJsf" target="_blank" rel="noopener" class="btn" aria-label="Voir la vitrine d'éclairage commercial">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+            <path d="M8 6h8"/>
+            <path d="M8 10h8"/>
+            <path d="M8 14h4"/>
+          </svg>
+          <span class="btn-label">Vitrine d'éclairage commercial</span>
+          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="c-sec-3">
+      <div class="section-head">
+        <span class="section-label" id="c-sec-3">Découvrez nos produits</span>
+      </div>
+      <div class="section-items">
+        <a href="https://drive.google.com/file/d/1_cWDOn_9VAnp5d4K703nH08KUuux6hLo/view" target="_blank" rel="noopener" class="btn" aria-label="Voir le catalogue de produits">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          </svg>
+          <span class="btn-label">Catalogue de produits</span>
+          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="c-sec-4">
+      <div class="section-head">
+        <span class="section-label" id="c-sec-4">Pour les consultants</span>
+      </div>
+      <div class="section-items">
+        <a href="#" class="btn disabled" aria-label="Carte des projets (mot de passe requis)" aria-disabled="true" onclick="return false;">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/>
+            <line x1="8" y1="2" x2="8" y2="18"/>
+            <line x1="16" y1="6" x2="16" y2="22"/>
+          </svg>
+          <span class="btn-label">Carte des projets</span>
+          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+  </nav>
+
+  <!-- Phone block -->
+  <div class="phone-block">
+    <span class="phone-label">Pour un appel direct</span>
+    <a href="tel:+14509997258" class="phone" aria-label="Appelez Vision Bleu LED au 450-999-7258">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+      </svg>
+      450 · 999 · 7258
+    </a>
+  </div>
+
+  <!-- Socials -->
+  <nav class="socials" aria-label="Réseaux sociaux">
+    <a href="https://instagram.com/visionbleuled" target="_blank" rel="noopener" class="social" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+      </svg>
+    </a>
+    <a href="https://www.facebook.com/visionbleuled/" target="_blank" rel="noopener" class="social" aria-label="Facebook">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+      </svg>
+    </a>
+    <a href="https://www.tiktok.com/@visionbleuled" target="_blank" rel="noopener" class="social" aria-label="TikTok">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.49a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.98a8.22 8.22 0 0 0 4.76 1.52V7.05a4.84 4.84 0 0 1-1-.36z"/>
+      </svg>
+    </a>
+    <a href="https://www.youtube.com/@VisionBleu" target="_blank" rel="noopener" class="social" aria-label="YouTube">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.13C5.12 19.56 12 19.56 12 19.56s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.43z"/>
+        <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>
+      </svg>
+    </a>
+    <a href="mailto:contact@visionbleu.com" class="social" aria-label="Écrivez-nous">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+        <polyline points="22,6 12,13 2,6"/>
+      </svg>
+    </a>
+    <a href="https://www.visionbleu.com/fr" target="_blank" rel="noopener" class="social" aria-label="Visitez notre site web">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="2" y1="12" x2="22" y2="12"/>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      </svg>
+    </a>
+  </nav>
+
+  <footer class="signoff">
+    Vision Bleu LED <span class="diamond"></span> Montréal <span class="diamond"></span> Québec
+  </footer>
+
+</main>
+
+</body>
+</html>

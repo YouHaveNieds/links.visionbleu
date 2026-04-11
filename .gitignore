@@ -1,0 +1,12 @@
+# Local Netlify folder
+.netlify
+
+# Node
+node_modules
+package-lock.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode
+.idea
