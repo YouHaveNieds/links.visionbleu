@@ -1,0 +1,642 @@
+{
+  "J5N": {
+    "lat": 45.73988,
+    "lng": -74.13783,
+    "source": "manual-nominatim-saint-colomban"
+  },
+  "J7V": {
+    "lat": 45.4001,
+    "lng": -74.0325,
+    "source": "postalcodes-ca"
+  },
+  "J5R": {
+    "lat": 45.4168,
+    "lng": -73.4992,
+    "source": "postalcodes-ca"
+  },
+  "J0J": {
+    "lat": 45.1529,
+    "lng": -73.1636,
+    "source": "postalcodes-ca"
+  },
+  "J3R": {
+    "lat": 46.0206,
+    "lng": -73.1439,
+    "source": "postalcodes-ca"
+  },
+  "J7T": {
+    "lat": 45.3702,
+    "lng": -74.1249,
+    "source": "postalcodes-ca"
+  },
+  "H2P": {
+    "lat": 45.5435,
+    "lng": -73.6339,
+    "source": "postalcodes-ca"
+  },
+  "H7P": {
+    "lat": 45.578,
+    "lng": -73.8004,
+    "source": "postalcodes-ca"
+  },
+  "J0L": {
+    "lat": 45.1956,
+    "lng": -73.5695,
+    "source": "postalcodes-ca"
+  },
+  "H4K": {
+    "lat": 45.5171,
+    "lng": -73.7363,
+    "source": "postalcodes-ca"
+  },
+  "J7N": {
+    "lat": 45.6345,
+    "lng": -74.1005,
+    "source": "postalcodes-ca"
+  },
+  "J0N": {
+    "lat": 45.5135,
+    "lng": -74.0534,
+    "source": "postalcodes-ca"
+  },
+  "J0E": {
+    "lat": 45.2831,
+    "lng": -72.5244,
+    "source": "postalcodes-ca"
+  },
+  "J6A": {
+    "lat": 45.7395,
+    "lng": -73.4588,
+    "source": "postalcodes-ca"
+  },
+  "H2M": {
+    "lat": 45.5528,
+    "lng": -73.6411,
+    "source": "postalcodes-ca"
+  },
+  "J5W": {
+    "lat": 45.8232,
+    "lng": -73.4294,
+    "source": "postalcodes-ca"
+  },
+  "J6J": {
+    "lat": 45.3691,
+    "lng": -73.7216,
+    "source": "postalcodes-ca"
+  },
+  "G0X": {
+    "lat": 47.9168,
+    "lng": -74.6159,
+    "source": "postalcodes-ca"
+  },
+  "J6K": {
+    "lat": 45.3526,
+    "lng": -73.7305,
+    "source": "postalcodes-ca"
+  },
+  "H2X": {
+    "lat": 45.5115,
+    "lng": -73.5683,
+    "source": "postalcodes-ca"
+  },
+  "J7L": {
+    "lat": 45.7424,
+    "lng": -73.6509,
+    "source": "postalcodes-ca"
+  },
+  "J5A": {
+    "lat": 45.3668,
+    "lng": -73.5659,
+    "source": "postalcodes-ca"
+  },
+  "J6T": {
+    "lat": 45.2409,
+    "lng": -74.1098,
+    "source": "postalcodes-ca"
+  },
+  "J7R": {
+    "lat": 45.574,
+    "lng": -73.94,
+    "source": "postalcodes-ca"
+  },
+  "H1G": {
+    "lat": 45.6109,
+    "lng": -73.6211,
+    "source": "postalcodes-ca"
+  },
+  "J7C": {
+    "lat": 45.689,
+    "lng": -73.8671,
+    "source": "postalcodes-ca"
+  },
+  "J5Y": {
+    "lat": 45.7774,
+    "lng": -73.4252,
+    "source": "postalcodes-ca"
+  },
+  "J4J": {
+    "lat": 45.5362,
+    "lng": -73.4721,
+    "source": "postalcodes-ca"
+  },
+  "J5K": {
+    "lat": 45.7334,
+    "lng": -74.1325,
+    "source": "postalcodes-ca"
+  },
+  "H8S": {
+    "lat": 45.4402,
+    "lng": -73.6747,
+    "source": "postalcodes-ca"
+  },
+  "J7M": {
+    "lat": 45.7888,
+    "lng": -73.7442,
+    "source": "postalcodes-ca"
+  },
+  "J2W": {
+    "lat": 45.3694,
+    "lng": -73.3137,
+    "source": "postalcodes-ca"
+  },
+  "H7H": {
+    "lat": 45.6409,
+    "lng": -73.7542,
+    "source": "postalcodes-ca"
+  },
+  "J5T": {
+    "lat": 45.8834,
+    "lng": -73.2825,
+    "source": "postalcodes-ca"
+  },
+  "H8P": {
+    "lat": 45.4011,
+    "lng": -73.619,
+    "source": "postalcodes-ca"
+  },
+  "H7T": {
+    "lat": 45.5573,
+    "lng": -73.7725,
+    "source": "postalcodes-ca"
+  },
+  "J7K": {
+    "lat": 45.77,
+    "lng": -73.6049,
+    "source": "postalcodes-ca"
+  },
+  "J0S": {
+    "lat": 45.1082,
+    "lng": -74.0451,
+    "source": "postalcodes-ca"
+  },
+  "H8N": {
+    "lat": 45.438,
+    "lng": -73.6215,
+    "source": "postalcodes-ca"
+  },
+  "J6V": {
+    "lat": 45.714,
+    "lng": -73.5357,
+    "source": "postalcodes-ca"
+  },
+  "H4J": {
+    "lat": 45.5313,
+    "lng": -73.7091,
+    "source": "postalcodes-ca"
+  },
+  "J6S": {
+    "lat": 45.2702,
+    "lng": -74.0482,
+    "source": "postalcodes-ca"
+  },
+  "J8A": {
+    "lat": 45.9334,
+    "lng": -74.0159,
+    "source": "postalcodes-ca"
+  },
+  "J7B": {
+    "lat": 45.6602,
+    "lng": -73.8157,
+    "source": "postalcodes-ca"
+  },
+  "J3L": {
+    "lat": 45.4501,
+    "lng": -73.2825,
+    "source": "postalcodes-ca"
+  },
+  "J7J": {
+    "lat": 45.7045,
+    "lng": -73.9472,
+    "source": "postalcodes-ca"
+  },
+  "J4K": {
+    "lat": 45.5183,
+    "lng": -73.5023,
+    "source": "postalcodes-ca"
+  },
+  "K6K": {
+    "lat": 45.061,
+    "lng": -74.7774,
+    "source": "postalcodes-ca"
+  },
+  "J0K": {
+    "lat": 46.7966,
+    "lng": -73.8705,
+    "source": "postalcodes-ca"
+  },
+  "H7L": {
+    "lat": 45.6168,
+    "lng": -73.7825,
+    "source": "postalcodes-ca"
+  },
+  "J5C": {
+    "lat": 45.4001,
+    "lng": -73.5825,
+    "source": "postalcodes-ca"
+  },
+  "H4A": {
+    "lat": 45.4717,
+    "lng": -73.6149,
+    "source": "postalcodes-ca"
+  },
+  "J6E": {
+    "lat": 46.0168,
+    "lng": -73.4492,
+    "source": "postalcodes-ca"
+  },
+  "H7Y": {
+    "lat": 45.5284,
+    "lng": -73.8509,
+    "source": "postalcodes-ca"
+  },
+  "H2V": {
+    "lat": 45.5168,
+    "lng": -73.6072,
+    "source": "postalcodes-ca"
+  },
+  "H1B": {
+    "lat": 45.632,
+    "lng": -73.5075,
+    "source": "postalcodes-ca"
+  },
+  "H9S": {
+    "lat": 45.4414,
+    "lng": -73.7749,
+    "source": "postalcodes-ca"
+  },
+  "J0T": {
+    "lat": 46.3002,
+    "lng": -74.5855,
+    "source": "postalcodes-ca"
+  },
+  "J7P": {
+    "lat": 45.5779,
+    "lng": -73.8809,
+    "source": "postalcodes-ca"
+  },
+  "J0P": {
+    "lat": 45.3655,
+    "lng": -74.312,
+    "source": "postalcodes-ca"
+  },
+  "J6X": {
+    "lat": 45.7275,
+    "lng": -73.7062,
+    "source": "postalcodes-ca"
+  },
+  "H7K": {
+    "lat": 45.6213,
+    "lng": -73.7398,
+    "source": "postalcodes-ca"
+  },
+  "H7R": {
+    "lat": 45.5526,
+    "lng": -73.8507,
+    "source": "postalcodes-ca"
+  },
+  "H7G": {
+    "lat": 45.5771,
+    "lng": -73.6873,
+    "source": "postalcodes-ca"
+  },
+  "H7S": {
+    "lat": 45.5793,
+    "lng": -73.7367,
+    "source": "postalcodes-ca"
+  },
+  "J3X": {
+    "lat": 45.6834,
+    "lng": -73.4325,
+    "source": "postalcodes-ca"
+  },
+  "H1C": {
+    "lat": 45.6656,
+    "lng": -73.5367,
+    "source": "postalcodes-ca"
+  },
+  "H9G": {
+    "lat": 45.4756,
+    "lng": -73.8367,
+    "source": "postalcodes-ca"
+  },
+  "J6R": {
+    "lat": 45.3168,
+    "lng": -73.7492,
+    "source": "postalcodes-ca"
+  },
+  "J7A": {
+    "lat": 45.6383,
+    "lng": -73.7975,
+    "source": "postalcodes-ca"
+  },
+  "J6Y": {
+    "lat": 45.7,
+    "lng": -73.752,
+    "source": "postalcodes-ca"
+  },
+  "K4A": {
+    "lat": 45.4697,
+    "lng": -75.4715,
+    "source": "postalcodes-ca"
+  },
+  "J4X": {
+    "lat": 45.4455,
+    "lng": -73.4841,
+    "source": "postalcodes-ca"
+  },
+  "J6W": {
+    "lat": 45.7064,
+    "lng": -73.6178,
+    "source": "postalcodes-ca"
+  },
+  "H4C": {
+    "lat": 45.4737,
+    "lng": -73.5882,
+    "source": "postalcodes-ca"
+  },
+  "J6N": {
+    "lat": 45.3168,
+    "lng": -73.8659,
+    "source": "postalcodes-ca"
+  },
+  "J4R": {
+    "lat": 45.4924,
+    "lng": -73.5009,
+    "source": "postalcodes-ca"
+  },
+  "H9K": {
+    "lat": 45.4577,
+    "lng": -73.9162,
+    "source": "postalcodes-ca"
+  },
+  "H4B": {
+    "lat": 45.4604,
+    "lng": -73.6303,
+    "source": "postalcodes-ca"
+  },
+  "H7V": {
+    "lat": 45.5478,
+    "lng": -73.7368,
+    "source": "postalcodes-ca"
+  },
+  "J5Z": {
+    "lat": 45.7643,
+    "lng": -73.5036,
+    "source": "postalcodes-ca"
+  },
+  "H8R": {
+    "lat": 45.3994,
+    "lng": -73.6506,
+    "source": "postalcodes-ca"
+  },
+  "J4G": {
+    "lat": 45.5679,
+    "lng": -73.4761,
+    "source": "postalcodes-ca"
+  },
+  "H1K": {
+    "lat": 45.6097,
+    "lng": -73.5472,
+    "source": "postalcodes-ca"
+  },
+  "J8T": {
+    "lat": 45.4776,
+    "lng": -75.7059,
+    "source": "postalcodes-ca"
+  },
+  "J9J": {
+    "lat": 45.4394,
+    "lng": -75.8465,
+    "source": "postalcodes-ca"
+  },
+  "H9B": {
+    "lat": 45.4897,
+    "lng": -73.7958,
+    "source": "postalcodes-ca"
+  },
+  "H9W": {
+    "lat": 45.4334,
+    "lng": -73.8659,
+    "source": "postalcodes-ca"
+  },
+  "H9P": {
+    "lat": 45.4679,
+    "lng": -73.7748,
+    "source": "postalcodes-ca"
+  },
+  "J2L": {
+    "lat": 45.3168,
+    "lng": -72.6491,
+    "source": "postalcodes-ca"
+  },
+  "H7W": {
+    "lat": 45.5338,
+    "lng": -73.7652,
+    "source": "postalcodes-ca"
+  },
+  "J7Z": {
+    "lat": 45.7788,
+    "lng": -73.9829,
+    "source": "postalcodes-ca"
+  },
+  "J2A": {
+    "lat": 45.8152,
+    "lng": -72.4027,
+    "source": "postalcodes-ca"
+  },
+  "J5J": {
+    "lat": 45.8306,
+    "lng": -73.9191,
+    "source": "postalcodes-ca"
+  },
+  "J2C": {
+    "lat": 45.8893,
+    "lng": -72.5055,
+    "source": "postalcodes-ca"
+  },
+  "J2H": {
+    "lat": 45.3938,
+    "lng": -72.7005,
+    "source": "postalcodes-ca"
+  },
+  "J5X": {
+    "lat": 45.8501,
+    "lng": -73.4825,
+    "source": "postalcodes-ca"
+  },
+  "G8Z": {
+    "lat": 46.3458,
+    "lng": -72.5716,
+    "source": "postalcodes-ca"
+  },
+  "J3Y": {
+    "lat": 45.4906,
+    "lng": -73.3991,
+    "source": "postalcodes-ca"
+  },
+  "J4B": {
+    "lat": 45.591,
+    "lng": -73.4361,
+    "source": "postalcodes-ca"
+  },
+  "H3G": {
+    "lat": 45.4987,
+    "lng": -73.5793,
+    "source": "postalcodes-ca"
+  },
+  "J1X": {
+    "lat": 45.2668,
+    "lng": -72.1491,
+    "source": "postalcodes-ca"
+  },
+  "J5M": {
+    "lat": 45.8501,
+    "lng": -73.7659,
+    "source": "postalcodes-ca"
+  },
+  "H9J": {
+    "lat": 45.4501,
+    "lng": -73.8659,
+    "source": "postalcodes-ca"
+  },
+  "J8H": {
+    "lat": 45.6501,
+    "lng": -74.3325,
+    "source": "postalcodes-ca"
+  },
+  "H3M": {
+    "lat": 45.5383,
+    "lng": -73.6932,
+    "source": "postalcodes-ca"
+  },
+  "J2J": {
+    "lat": 45.4005,
+    "lng": -72.7825,
+    "source": "postalcodes-ca"
+  },
+  "J3B": {
+    "lat": 45.2832,
+    "lng": -73.2792,
+    "source": "postalcodes-ca"
+  },
+  "J3V": {
+    "lat": 45.532,
+    "lng": -73.3437,
+    "source": "postalcodes-ca"
+  },
+  "J3N": {
+    "lat": 45.5334,
+    "lng": -73.2825,
+    "source": "postalcodes-ca"
+  },
+  "J6Z": {
+    "lat": 45.6694,
+    "lng": -73.7752,
+    "source": "postalcodes-ca"
+  },
+  "J0R": {
+    "lat": 45.866,
+    "lng": -74.1785,
+    "source": "postalcodes-ca"
+  },
+  "V1Y": {
+    "lat": 49.8928,
+    "lng": -119.4852,
+    "source": "postalcodes-ca"
+  },
+  "J0H": {
+    "lat": 45.6609,
+    "lng": -72.77,
+    "source": "postalcodes-ca"
+  },
+  "J3E": {
+    "lat": 45.5834,
+    "lng": -73.3325,
+    "source": "postalcodes-ca"
+  },
+  "J7Y": {
+    "lat": 45.8058,
+    "lng": -74.0165,
+    "source": "postalcodes-ca"
+  },
+  "G2M": {
+    "lat": 46.91669,
+    "lng": -71.31924,
+    "source": "reverse-geocode"
+  },
+  "G4Z": {
+    "lat": 49.20282,
+    "lng": -68.16128,
+    "source": "reverse-geocode"
+  },
+  "L8V": {
+    "lat": 43.24132,
+    "lng": -79.85296,
+    "source": "reverse-geocode"
+  },
+  "G8T": {
+    "lat": 46.3877,
+    "lng": -72.5357,
+    "source": "postalcodes-ca"
+  },
+  "G0Z": {
+    "lat": 46.179,
+    "lng": -72.1569,
+    "source": "postalcodes-ca"
+  },
+  "G8V": {
+    "lat": 46.4098,
+    "lng": -72.4908,
+    "source": "postalcodes-ca"
+  },
+  "K1K": {
+    "lat": 45.4448,
+    "lng": -75.6431,
+    "source": "postalcodes-ca"
+  },
+  "J8N": {
+    "lat": 45.6501,
+    "lng": -75.666,
+    "source": "postalcodes-ca"
+  },
+  "J0X": {
+    "lat": 46.307,
+    "lng": -76.7653,
+    "source": "postalcodes-ca"
+  },
+  "J9B": {
+    "lat": 45.5001,
+    "lng": -75.7827,
+    "source": "postalcodes-ca"
+  },
+  "J8V": {
+    "lat": 45.5711,
+    "lng": -75.7615,
+    "source": "postalcodes-ca"
+  },
+  "G0A": {
+    "lat": 46.67015,
+    "lng": -71.76609,
+    "source": "reverse-geocode"
+  }
+}

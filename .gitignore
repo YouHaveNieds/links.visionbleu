@@ -10,3 +10,9 @@ package-lock.json
 Thumbs.db
 .vscode
 .idea
+
+# Private address geocache (contains full addresses — PII, never deploy)
+# Lives at ~/.visionbleu-cache/ (outside project tree), this entry is just
+# belt-and-suspenders in case someone copies it in.
+scripts/.cache/
+.visionbleu-cache/
