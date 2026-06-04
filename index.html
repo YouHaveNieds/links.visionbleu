@@ -1085,7 +1085,11 @@
   .temp-label {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 5px;
+    /* Fixed width = the wider "2700K · CHAUD" state (+buffer) so the label and
+       pill never resize when toggling between CHAUD / FROID. */
+    width: 104px;
     font-size: 0.58rem;
     font-weight: 700;
     letter-spacing: 0.12em;
@@ -1114,7 +1118,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 64px;
+    width: 104px;            /* match the fixed-width label above */
     height: 28px;
     padding: 0 6px;
     border-radius: 999px;
