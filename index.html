@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- JS flag (set before paint) so the logo can start hidden and "strike on" without a flash -->
+<script>document.documentElement.classList.add('js');</script>
 <title data-i18n="meta.title">Vision Bleu LED | Liens</title>
 <meta name="description" data-i18n-attr="content" data-i18n="meta.description" content="Leader canadien de l'éclairage permanent — Design, installation, service. Connectez-vous avec Vision Bleu LED.">
 
@@ -405,7 +407,6 @@
       drop-shadow(0 0 24px rgba(var(--led-r), var(--led-g), var(--led-b), 0.55))
       drop-shadow(0 0 70px rgba(var(--led-r), var(--led-g), var(--led-b), 0.25));
     transition: filter 700ms ease;
-    animation: hero-reveal 900ms cubic-bezier(0.2, 0, 0, 1) 1200ms both;
   }
   @media (min-width: 640px) {
     .hero-logo { max-width: 440px; }
@@ -432,6 +433,42 @@
   @keyframes hero-reveal {
     from { opacity: 0; transform: translateY(10px); }
     to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* LED strike-up — the logo flickers on like a powering LED sign: a few
+     stuttering false-starts, then it snaps to full brightness with a glow
+     bloom. Glow uses the live --led-r/g/b vars so it matches the warm/cool
+     temperature. Triggered when the logo scrolls into view (see JS). */
+  @keyframes led-flicker {
+    0%   { opacity: 0;    filter: brightness(0.2); }
+    3%   { opacity: 0.65; filter: brightness(1.6) drop-shadow(0 0 16px rgba(var(--led-r), var(--led-g), var(--led-b), 0.5)); }
+    6%   { opacity: 0.08; filter: brightness(0.25); }
+    10%  { opacity: 0.85; filter: brightness(1.7) drop-shadow(0 0 20px rgba(var(--led-r), var(--led-g), var(--led-b), 0.55)); }
+    13%  { opacity: 0.12; filter: brightness(0.2); }
+    19%  { opacity: 0.55; filter: brightness(1.35); }
+    22%  { opacity: 0.04; filter: brightness(0.18); }
+    30%  { opacity: 1;    filter: brightness(2) drop-shadow(0 0 34px rgba(var(--led-r), var(--led-g), var(--led-b), 0.85)) drop-shadow(0 0 95px rgba(var(--led-r), var(--led-g), var(--led-b), 0.45)); }
+    34%  { opacity: 0.38; filter: brightness(0.55); }
+    40%  { opacity: 1;    filter: brightness(1.7); }
+    47%  { opacity: 0.78; filter: brightness(1.15); }
+    58%  { opacity: 1;    filter: brightness(1.5) drop-shadow(0 0 28px rgba(var(--led-r), var(--led-g), var(--led-b), 0.7)); }
+    73%  { opacity: 0.93; filter: brightness(1.2); }
+    100% { opacity: 1;    filter: brightness(1) drop-shadow(0 0 24px rgba(var(--led-r), var(--led-g), var(--led-b), 0.55)) drop-shadow(0 0 70px rgba(var(--led-r), var(--led-g), var(--led-b), 0.25)); }
+  }
+
+  .hero-logo.is-flickering {
+    animation: led-flicker 1400ms linear both;
+  }
+  /* With JS + motion allowed, start hidden so the strike-up has no pre-flash.
+     No-JS and reduced-motion users keep the logo fully visible. */
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .hero-logo { opacity: 0; }
+    /* After the first strike the logo stays lit (more specific so it wins). */
+    html.js .hero-logo.lit { opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-logo.is-flickering { animation: none; }
   }
 
   /* =========================================================
@@ -2245,6 +2282,40 @@
       btn.classList.toggle('is-on', on);
       btn.setAttribute('aria-pressed', String(on));
     });
+  })();
+</script>
+
+<!-- Logo LED strike-up — flickers on when it scrolls into view, re-arms on exit -->
+<script>
+  (function () {
+    var logo = document.querySelector('.hero-logo');
+    if (!logo || !('IntersectionObserver' in window)) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var armed = true;
+
+    function strike() {
+      logo.classList.add('lit');        // stays visible once it has fired
+      logo.classList.remove('is-flickering');
+      void logo.offsetWidth;            // force reflow so the animation restarts
+      logo.classList.add('is-flickering');
+    }
+
+    logo.addEventListener('animationend', function (e) {
+      if (e.animationName === 'led-flicker') logo.classList.remove('is-flickering');
+    });
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting && en.intersectionRatio >= 0.45) {
+          if (armed) { armed = false; strike(); }
+        } else if (en.intersectionRatio === 0) {
+          armed = true;                 // fully out of view → re-arm for next scroll-in
+        }
+      });
+    }, { threshold: [0, 0.45] });
+
+    io.observe(logo);
   })();
 </script>
 
