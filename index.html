@@ -384,48 +384,64 @@
   }
 
   /* =========================================================
-     HERO — brand name sits IN the light
+     IDENTITY BLOCK — V1: HORIZONTAL CAPTION
+     Row 1: logo + divider + tagline on one compact line.
+     Row 2: inline stats ribbon + dimmer pill. Cities as a micro caption.
+     Internally width-capped to 390px so it stays tight inside the
+     shared 480px .container without touching the video/sections below.
      ========================================================= */
   .hero {
-    text-align: center;
-    padding: 28px 0 24px;
     position: relative;
+    z-index: 3;
+    max-width: 390px;
+    margin: 0 auto;
+    padding: 16px 0 4px;
+    animation: hero-reveal 900ms cubic-bezier(0.2, 0, 0, 1) 1500ms both;
   }
 
-  /* The real Vision Bleu logo — lit from above by the fixture.
-     Bigger + pulled up tight so the bar really looks like it's
-     lighting up the brand. */
+  /* Row 1: logo + divider + tagline in one horizontal band */
+  .identity {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  /* The real Vision Bleu logo — smaller + left-aligned per V1.
+     Keeps class hero-logo so the IntersectionObserver LED warm-up
+     still targets it. Resting glow 12px / 32px to match V1. */
   .hero-logo {
-    display: inline-block;
-    margin: 0 auto;
-    max-width: 380px;
-    width: 94%;
-    height: auto;
+    height: 28px;
+    width: auto;
+    flex-shrink: 0;
     filter:
-      drop-shadow(0 0 24px rgba(var(--led-r), var(--led-g), var(--led-b), 0.55))
-      drop-shadow(0 0 70px rgba(var(--led-r), var(--led-g), var(--led-b), 0.25));
+      drop-shadow(0 0 12px rgba(var(--led-r), var(--led-g), var(--led-b), 0.55))
+      drop-shadow(0 0 32px rgba(var(--led-r), var(--led-g), var(--led-b), 0.25));
     transition: filter 700ms ease;
   }
-  @media (min-width: 640px) {
-    .hero-logo { max-width: 440px; }
+
+  .identity-divider {
+    width: 1px;
+    height: 22px;
+    flex-shrink: 0;
+    background: linear-gradient(180deg,
+      transparent,
+      rgba(var(--led-r), var(--led-g), var(--led-b), 0.45) 30%,
+      rgba(var(--led-r), var(--led-g), var(--led-b), 0.45) 70%,
+      transparent);
+    transition: background 1600ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .hero-tagline {
-    margin-top: 22px;
-    font-size: 0.9375rem;
+    font-size: 0.72rem;
     font-weight: 500;
-    color: #f4f6fa;
-    max-width: 340px;
-    margin-left: auto;
-    margin-right: auto;
+    color: var(--text-secondary);
     letter-spacing: 0.005em;
+    line-height: 1.4;
+    flex: 1;
     /* Dark shadow behind the text so it punches through the spill glow */
     text-shadow:
       0 1px 2px rgba(0, 0, 0, 0.85),
-      0 0 18px rgba(0, 0, 0, 0.7);
-    position: relative;
-    z-index: 3;
-    animation: hero-reveal 900ms cubic-bezier(0.2, 0, 0, 1) 1500ms both;
+      0 0 14px rgba(0, 0, 0, 0.7);
   }
 
   @keyframes hero-reveal {
@@ -445,7 +461,7 @@
     38%  { opacity: 0.52; filter: brightness(0.88); }
     52%  { opacity: 1;    filter: brightness(1.32) drop-shadow(0 0 28px rgba(var(--led-r), var(--led-g), var(--led-b), 0.6)); }
     64%  { opacity: 0.9;  filter: brightness(1.1); }
-    100% { opacity: 1;    filter: brightness(1) drop-shadow(0 0 24px rgba(var(--led-r), var(--led-g), var(--led-b), 0.55)) drop-shadow(0 0 70px rgba(var(--led-r), var(--led-g), var(--led-b), 0.25)); }
+    100% { opacity: 1;    filter: brightness(1) drop-shadow(0 0 12px rgba(var(--led-r), var(--led-g), var(--led-b), 0.55)) drop-shadow(0 0 32px rgba(var(--led-r), var(--led-g), var(--led-b), 0.25)); }
   }
 
   .hero-logo.is-flickering {
@@ -457,122 +473,93 @@
   }
 
   /* =========================================================
-     STATS — museum-wall plaque under the hero.
-     Serif numbers (Fraunces), LED-tinted glowing hairlines between.
+     META ROW — inline stats ribbon + dimmer on one line.
+     Compact horizontal layout (V1). No big serif numbers — weight
+     contrast carries the hierarchy instead.
      ========================================================= */
   .stats {
-    display: grid;
-    grid-template-columns: 1fr 1px 1fr 1px 1fr;
+    max-width: 390px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .meta-row {
+    display: flex;
     align-items: center;
-    gap: 0;
-    max-width: 480px;
-    margin: 12px auto 4px;
-    padding: 18px 8px 8px;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 0 0;
     position: relative;
+    z-index: 3;
     opacity: 0;
     transform: translateY(10px);
     animation: fade-up 1000ms cubic-bezier(0.2, 0, 0, 1) 1900ms forwards;
   }
 
-  /* Region caption — sits directly under the 3 stat numbers, breaking
-     down what the "3 régions" actually refers to. */
-  .stats-regions {
-    grid-column: 1 / -1;
-    text-align: center;
-    margin: 10px 0 0;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #e6ebf2;
-    text-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.9),
-      0 0 14px rgba(0, 0, 0, 0.7);
-    opacity: 0;
-    animation: fade-up 1000ms cubic-bezier(0.2, 0, 0, 1) 2050ms forwards;
-  }
-
-  @media (max-width: 480px) {
-    .stats-regions { font-size: 0.625rem; letter-spacing: 0.18em; margin-bottom: 6px; }
-  }
-
-  /* Hairline dividers — glow with current LED color */
-  .stats::before,
-  .stats::after {
-    content: "";
-    grid-row: 1;
-    width: 1px;
-    height: 58px;
-    justify-self: center;
-    background: linear-gradient(
-      180deg,
-      transparent 0%,
-      rgba(var(--led-r), var(--led-g), var(--led-b), 0.55) 25%,
-      rgba(var(--led-r), var(--led-g), var(--led-b), 0.55) 75%,
-      transparent 100%
-    );
-    box-shadow:
-      0 0 10px rgba(var(--led-r), var(--led-g), var(--led-b), 0.35),
-      0 0 24px rgba(var(--led-r), var(--led-g), var(--led-b), 0.18);
-    transition:
-      background 1600ms cubic-bezier(0.4, 0, 0.2, 1),
-      box-shadow 1600ms cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .stats::before { grid-column: 2; }
-  .stats::after  { grid-column: 4; }
-
-  .stat {
+  /* Stats as a compact inline list — no big numbers */
+  .stats-inline {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 6px;
-    padding: 0 6px;
+    gap: 0;
+  }
+
+  .stat-item {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
   }
 
   .stat-num {
-    font-family: var(--serif);
-    font-weight: 400;
-    font-size: 2.4rem;
-    line-height: 1;
-    letter-spacing: -0.02em;
+    font-size: 1rem;
+    font-weight: 700;
     color: var(--text-primary);
+    letter-spacing: -0.02em;
+    line-height: 1;
     font-feature-settings: "tnum" 1, "lnum" 1;
-    display: inline-flex;
-    align-items: baseline;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
   }
 
   .stat-plus {
-    font-size: 0.55em;
-    font-weight: 400;
-    margin-left: 2px;
+    font-size: 0.6em;
+    font-weight: 600;
     color: rgba(var(--led-r), var(--led-g), var(--led-b), 0.85);
-    text-shadow: 0 0 12px rgba(var(--led-r), var(--led-g), var(--led-b), 0.55);
-    transition:
-      color 1600ms cubic-bezier(0.4, 0, 0.2, 1),
-      text-shadow 1600ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: color 1600ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .stat-caption {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.22em;
+  .stat-label {
+    font-size: 0.64rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: #d6dbe5;
-    text-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.85),
-      0 0 12px rgba(0, 0, 0, 0.6);
+    color: var(--text-muted);
   }
 
-  @media (max-width: 480px) {
-    .stats {
-      max-width: 100%;
-      margin: 12px auto 10px;
-      padding: 14px 4px 4px;
-    }
-    .stat-num { font-size: 2rem; }
-    .stat-caption { font-size: 0.5625rem; letter-spacing: 0.2em; }
-    .stats::before,
-    .stats::after { height: 46px; }
+  .stat-sep {
+    width: 1px;
+    height: 14px;
+    background: rgba(var(--led-r), var(--led-g), var(--led-b), 0.3);
+    margin: 0 10px;
+    transition: background 1600ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* City breakdown — micro caption under the stats ribbon */
+  .stats-regions {
+    margin: 5px 0 0;
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fade-up 1000ms cubic-bezier(0.2, 0, 0, 1) 2050ms forwards;
+  }
+
+  @media (max-width: 390px) {
+    .stat-sep { margin: 0 7px; }
+    .stat-label { font-size: 0.58rem; letter-spacing: 0.1em; }
+    .stats-regions { font-size: 0.52rem; letter-spacing: 0.12em; }
   }
 
   /* =========================================================
@@ -1064,134 +1051,122 @@
   }
 
   /* =========================================================
-     TEMPERATURE DIMMER — 5000K cool ↔ 2700K warm
-     Hardware-inspired horizontal slider. Own line, centered in hero.
+     TEMPERATURE DIMMER — compact toggle (V1).
+     A small pill with a visible state label so a first-time visitor
+     instantly reads it as "tap to switch warm / cold white".
+     The WHOLE label + pill is one button = big tap target.
      ========================================================= */
   .temp-dimmer {
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin: 32px auto 0;
-    padding: 0;
+    align-items: flex-end;
+    gap: 5px;
+    padding: 4px;
+    margin: 0;
     border: 0;
     background: transparent;
     cursor: pointer;
     font-family: var(--sans);
-    color: var(--text-secondary);
-    width: fit-content;
-
-    /* Kill the browser tap-highlight — outline handled by focus-visible below */
     -webkit-tap-highlight-color: transparent;
     -webkit-appearance: none;
     appearance: none;
-
-    opacity: 0;
-    transform: translateY(8px);
-    pointer-events: none;
-    animation: temp-reveal 700ms cubic-bezier(0.2, 0, 0, 1) 2400ms forwards;
+    flex-shrink: 0;
   }
-  .temp-dimmer:focus { outline: none; }  /* suppress ring on mouse click */
+  .temp-dimmer:focus { outline: none; }
   .temp-dimmer:active { outline: none; }
   .temp-dimmer:focus-visible {
-    outline: 2px solid rgba(var(--led-r), var(--led-g), var(--led-b), 0.9);
-    outline-offset: 6px;
-    border-radius: 8px;
-  }
-  .temp-dimmer:focus-visible .temp-track {
-    box-shadow:
-      inset 0 1px 2px rgba(0, 0, 0, 0.6),
-      0 0 0 2px rgba(var(--led-r), var(--led-g), var(--led-b), 0.55);
+    outline: 2px solid rgba(var(--led-r), var(--led-g), var(--led-b), 0.85);
+    outline-offset: 3px;
+    border-radius: 10px;
   }
 
-  /* Kelvin readout label above the slider */
+  /* Visible state label — the JS sets "2700K · CHAUD" / "5000K · FROID".
+     A small ⇄ swap glyph signals the control flips between two states. */
   .temp-label {
-    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.58rem;
     font-weight: 700;
-    letter-spacing: 0.24em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #ffffff;
+    color: #f4f6fa;
+    white-space: nowrap;
     text-shadow:
       0 1px 2px rgba(0, 0, 0, 0.9),
-      0 0 14px rgba(0, 0, 0, 0.8),
-      0 0 22px rgba(var(--led-r), var(--led-g), var(--led-b), 0.45);
-    transition:
-      color 1600ms cubic-bezier(0.4, 0, 0.2, 1),
-      text-shadow 1600ms cubic-bezier(0.4, 0, 0.2, 1);
+      0 0 12px rgba(0, 0, 0, 0.75);
     font-variant-numeric: tabular-nums;
-    position: relative;
-    z-index: 3;
+    transition: color 1600ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  /* The swap hint glyph, injected before the label text */
+  .temp-label::before {
+    content: "⇄";
+    font-size: 0.85em;
+    font-weight: 700;
+    color: rgba(var(--led-r), var(--led-g), var(--led-b), 0.95);
+    text-shadow: 0 0 8px rgba(var(--led-r), var(--led-g), var(--led-b), 0.55);
+    transition: color 1600ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* The track — a hairline dimmer */
+  /* The track — a compact hairline dimmer */
   .temp-track {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0;
-    width: 200px;
-    height: 48px;
-    padding: 0 20px;
+    width: 64px;
+    height: 28px;
+    padding: 0 6px;
     border-radius: 999px;
     border: 1px solid rgba(255, 255, 255, 0.10);
     background:
       linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.28) 100%);
     box-shadow:
       inset 0 2px 3px rgba(0, 0, 0, 0.65),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.04),
-      0 1px 0 rgba(255, 255, 255, 0.05),
-      0 4px 18px rgba(0, 0, 0, 0.4);
+      0 1px 0 rgba(255, 255, 255, 0.05);
     transition: border-color 400ms ease, box-shadow 400ms ease;
+    overflow: visible;
   }
   .temp-dimmer:hover .temp-track,
   .temp-dimmer:focus-visible .temp-track {
     border-color: rgba(255, 255, 255, 0.18);
     box-shadow:
       inset 0 2px 3px rgba(0, 0, 0, 0.65),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.06),
-      0 1px 0 rgba(255, 255, 255, 0.08),
-      0 4px 22px rgba(0, 0, 0, 0.5),
-      0 0 32px rgba(var(--led-r), var(--led-g), var(--led-b), 0.22);
+      0 0 18px rgba(var(--led-r), var(--led-g), var(--led-b), 0.2);
   }
 
-  /* Snowflake (cool) + flame (warm) icons flanking the track */
+  /* Sun (warm) + snowflake (cool) icons flanking the track */
   .temp-icon {
     position: relative;
     z-index: 2;
-    width: 18px;
-    height: 18px;
+    width: 13px;
+    height: 13px;
     color: var(--text-muted);
     transition: color 700ms ease, filter 700ms ease;
     flex-shrink: 0;
   }
   .temp-dimmer[data-temp="cool"] .temp-icon-cool {
     color: var(--led-core);
-    filter: drop-shadow(0 0 5px rgba(var(--led-r), var(--led-g), var(--led-b), 0.8));
+    filter: drop-shadow(0 0 4px rgba(var(--led-r), var(--led-g), var(--led-b), 0.8));
   }
   .temp-dimmer[data-temp="warm"] .temp-icon-warm {
     color: var(--led-core);
-    filter: drop-shadow(0 0 5px rgba(var(--led-r), var(--led-g), var(--led-b), 0.8));
+    filter: drop-shadow(0 0 4px rgba(var(--led-r), var(--led-g), var(--led-b), 0.8));
   }
 
-  /* The sliding orb — the "light source" on the dimmer
-     Icons sit at 20px left/right padding + 9px half-width = centered at 29px from edge.
-     Orb is 32px wide → to center orb on icon, orb left = 29px - 16px = 13px. */
+  /* The sliding orb — the "light source" on the dimmer */
   .temp-orb {
     position: absolute;
     top: 50%;
-    left: calc(100% - 45px); /* default (cool) — centered on right snowflake icon */
-    width: 32px;
-    height: 32px;
+    left: calc(100% - 31px); /* default cool — over right snowflake */
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     background: radial-gradient(circle at 35% 30%, var(--led-core), var(--led) 55%, var(--led-deep) 100%);
     box-shadow:
-      0 0 14px rgba(var(--led-r), var(--led-g), var(--led-b), 0.75),
-      0 0 32px rgba(var(--led-r), var(--led-g), var(--led-b), 0.45),
-      0 0 56px rgba(var(--led-r), var(--led-g), var(--led-b), 0.22),
-      inset 0 2px 2px rgba(255, 255, 255, 0.55),
-      inset 0 -1px 2px rgba(0, 0, 0, 0.3);
+      0 0 10px rgba(var(--led-r), var(--led-g), var(--led-b), 0.75),
+      0 0 22px rgba(var(--led-r), var(--led-g), var(--led-b), 0.45),
+      inset 0 2px 2px rgba(255, 255, 255, 0.55);
     transform: translate(0, -50%);
     transition:
       left 1600ms cubic-bezier(0.4, 0, 0.2, 1),
@@ -1200,24 +1175,7 @@
     pointer-events: none;
   }
   .temp-dimmer[data-temp="warm"] .temp-orb {
-    left: 13px; /* warm — centered on left sun icon */
-  }
-
-  @keyframes temp-reveal {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .temp-dimmer {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
-      animation: none;
-    }
+    left: 9px; /* warm — over left sun */
   }
 
   /* =========================================================
@@ -1361,75 +1319,88 @@
     </div>
   </section>
 
-  <!-- Hero — real Vision Bleu logo sits in the light spill -->
+  <!-- Identity block — V1 horizontal caption.
+       Row 1: logo + divider + tagline on one line.
+       Row 2: inline stats ribbon + dimmer pill. Cities as a micro caption. -->
   <header class="hero">
-    <img
-      class="hero-logo"
-      src="assets/logo-white.png"
-      alt="Vision Bleu LED"
-      width="280"
-      height="80"
-      decoding="async"
-      fetchpriority="high"
-    >
-    <h1 class="hero-tagline" data-i18n="hero.tagline">Leader canadien de l'éclairage permanent.<br>Design, installation, service.</h1>
 
-    <!-- Light temperature dimmer — 5000K cool (left) ↔ 2700K warm (right, default) -->
-    <button
-      type="button"
-      id="temp-dimmer"
-      class="temp-dimmer"
-      data-temp="warm"
-      aria-label="Changer la température de la lumière : actuellement 2700K chaud"
-    >
-      <span class="temp-label" id="temp-label">2700K · CHAUD</span>
-      <span class="temp-track">
-        <!-- WARM (Sun — Phosphor style) — LEFT side, matches warm-mode orb -->
-        <svg class="temp-icon temp-icon-warm" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="128" cy="128" r="52"/>
-          <line x1="128" y1="32" x2="128" y2="16"/>
-          <line x1="128" y1="240" x2="128" y2="224"/>
-          <line x1="32" y1="128" x2="16" y2="128"/>
-          <line x1="240" y1="128" x2="224" y2="128"/>
-          <line x1="60" y1="60" x2="48" y2="48"/>
-          <line x1="208" y1="208" x2="196" y2="196"/>
-          <line x1="196" y1="60" x2="208" y2="48"/>
-          <line x1="48" y1="208" x2="60" y2="196"/>
-        </svg>
-        <span class="temp-orb" aria-hidden="true"></span>
-        <!-- COOL (Snowflake — Phosphor style) — RIGHT side, matches cool-mode orb -->
-        <svg class="temp-icon temp-icon-cool" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <line x1="128" y1="24" x2="128" y2="232"/>
-          <line x1="24" y1="128" x2="232" y2="128"/>
-          <line x1="54" y1="54" x2="202" y2="202"/>
-          <line x1="202" y1="54" x2="54" y2="202"/>
-          <polyline points="96 48 128 16 160 48"/>
-          <polyline points="96 208 128 240 160 208"/>
-          <polyline points="48 96 16 128 48 160"/>
-          <polyline points="208 96 240 128 208 160"/>
-        </svg>
-      </span>
-    </button>
+    <!-- Row 1: logo + divider + tagline -->
+    <div class="identity">
+      <img
+        class="hero-logo"
+        src="assets/logo-white.png"
+        alt="Vision Bleu LED"
+        width="280"
+        height="80"
+        decoding="async"
+        fetchpriority="high"
+      >
+      <div class="identity-divider" aria-hidden="true"></div>
+      <h1 class="hero-tagline" data-i18n="hero.tagline">Leader canadien de l'éclairage permanent</h1>
+    </div>
+
+    <!-- Row 2: inline stats ribbon + temperature dimmer -->
+    <div class="meta-row">
+      <div class="stats">
+        <div class="stats-inline" data-i18n-attr="aria-label" data-i18n="stats.aria" aria-label="Vision Bleu en chiffres" role="group">
+          <div class="stat-item">
+            <span class="stat-num">500<span class="stat-plus">+</span></span>
+            <span class="stat-label" data-i18n="stats.projects">Projets</span>
+          </div>
+          <div class="stat-sep" aria-hidden="true"></div>
+          <div class="stat-item">
+            <span class="stat-num">3</span>
+            <span class="stat-label" data-i18n="stats.regions">Régions</span>
+          </div>
+          <div class="stat-sep" aria-hidden="true"></div>
+          <div class="stat-item">
+            <span class="stat-num">4<span class="stat-plus">+</span></span>
+            <span class="stat-label" data-i18n="stats.years">Années</span>
+          </div>
+        </div>
+        <p class="stats-regions" data-i18n="stats.regionsCaption">Montréal · Gatineau · Trois-Rivières</p>
+      </div>
+
+      <!-- Light temperature dimmer — visible label + pill, whole thing clickable.
+           5000K cool (snowflake, right) ↔ 2700K warm (sun, left, default). -->
+      <button
+        type="button"
+        id="temp-dimmer"
+        class="temp-dimmer"
+        data-temp="warm"
+        aria-label="Changer la température de la lumière : actuellement 2700K chaud"
+      >
+        <span class="temp-label" id="temp-label">2700K · CHAUD</span>
+        <span class="temp-track">
+          <!-- WARM (Sun — Phosphor style) — LEFT side, matches warm-mode orb -->
+          <svg class="temp-icon temp-icon-warm" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="128" cy="128" r="52"/>
+            <line x1="128" y1="32" x2="128" y2="16"/>
+            <line x1="128" y1="240" x2="128" y2="224"/>
+            <line x1="32" y1="128" x2="16" y2="128"/>
+            <line x1="240" y1="128" x2="224" y2="128"/>
+            <line x1="60" y1="60" x2="48" y2="48"/>
+            <line x1="208" y1="208" x2="196" y2="196"/>
+            <line x1="196" y1="60" x2="208" y2="48"/>
+            <line x1="48" y1="208" x2="60" y2="196"/>
+          </svg>
+          <span class="temp-orb" aria-hidden="true"></span>
+          <!-- COOL (Snowflake — Phosphor style) — RIGHT side, matches cool-mode orb -->
+          <svg class="temp-icon temp-icon-cool" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="128" y1="24" x2="128" y2="232"/>
+            <line x1="24" y1="128" x2="232" y2="128"/>
+            <line x1="54" y1="54" x2="202" y2="202"/>
+            <line x1="202" y1="54" x2="54" y2="202"/>
+            <polyline points="96 48 128 16 160 48"/>
+            <polyline points="96 208 128 240 160 208"/>
+            <polyline points="48 96 16 128 48 160"/>
+            <polyline points="208 96 240 128 208 160"/>
+          </svg>
+        </span>
+      </button>
+    </div>
+
   </header>
-
-  <!-- Stats row — museum-wall plaque, LED-tinted hairlines -->
-  <section class="stats" data-i18n-attr="aria-label" data-i18n="stats.aria" aria-label="Vision Bleu en chiffres">
-    <div class="stat">
-      <span class="stat-num">500<span class="stat-plus">+</span></span>
-      <span class="stat-caption" data-i18n="stats.projects">Projets</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">3</span>
-      <span class="stat-caption" data-i18n="stats.regions">Régions</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">4<span class="stat-plus">+</span></span>
-      <span class="stat-caption" data-i18n="stats.years">Années</span>
-    </div>
-    <!-- Region caption INSIDE the grid — spans all 5 columns so it sits
-         directly below the stats with minimal gap -->
-    <p class="stats-regions" data-i18n="stats.regionsCaption">Montréal · Gatineau · Trois-Rivières</p>
-  </section>
 
   <!-- Links -->
   <nav class="sections" data-i18n-attr="aria-label" data-i18n="nav.aria" aria-label="Liens rapides">
@@ -1671,7 +1642,7 @@
         'meta.title':              'Vision Bleu LED | Liens',
         'meta.description':        "Leader canadien de l\u2019éclairage permanent — Design, installation, service. Connectez-vous avec Vision Bleu LED.",
         'meta.ogDescription':      "Leader canadien de l\u2019éclairage permanent — Design, installation, service.",
-        'hero.tagline':            "Leader canadien de l\u2019éclairage permanent.<br>Design, installation, service.",
+        'hero.tagline':            "Leader canadien de l\u2019éclairage permanent",
         'stats.aria':              'Vision Bleu en chiffres',
         'stats.projects':          'Projets',
         'stats.regions':           'Régions',
@@ -1712,7 +1683,7 @@
         'meta.title':              'Vision Bleu LED | Links',
         'meta.description':        "Canada\u2019s leading permanent lighting company — Design, installation, service. Connect with Vision Bleu LED.",
         'meta.ogDescription':      "Canada\u2019s leading permanent lighting company — Design, installation, service.",
-        'hero.tagline':            "Canada\u2019s leading permanent lighting company.<br>Design, installation, service.",
+        'hero.tagline':            "Canada\u2019s leading permanent lighting company",
         'stats.aria':              'Vision Bleu by the numbers',
         'stats.projects':          'Projects',
         'stats.regions':           'Regions',
