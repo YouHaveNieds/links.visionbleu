@@ -559,17 +559,18 @@
      ========================================================= */
   .showcase {
     max-width: 480px;
-    margin: 6px auto 2px;
+    margin: 18px auto 16px;
     padding: 0 20px;
     opacity: 0;
     transform: translateY(10px);
-    animation: fade-up 1000ms cubic-bezier(0.2, 0, 0, 1) 2200ms forwards;
+    /* Hero element — leads the entrance, appears first */
+    animation: fade-up 900ms cubic-bezier(0.2, 0, 0, 1) 300ms forwards;
   }
 
   .showcase-frame {
     position: relative;
     width: 100%;
-    max-width: 300px;
+    max-width: 360px;
     aspect-ratio: 9 / 16;
     margin: 0 auto;
     border-radius: 16px;
@@ -653,8 +654,8 @@
   .showcase-sound.is-on .showcase-badge { padding: 8px; gap: 0; }
 
   @media (max-width: 480px) {
-    .showcase { margin: 4px auto 2px; }
-    .showcase-frame { max-width: 280px; }
+    .showcase { margin: 14px auto 14px; }
+    .showcase-frame { max-width: 330px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -1297,6 +1298,47 @@
 
 <main class="container">
 
+  <!-- Showcase video — HERO: first thing visitors see, sits just under the LED
+       light bar, above the logo. Autoplays muted + looping; tap toggles sound.
+       To swap: run scripts/update-video.sh <google-drive-link>, then redeploy. -->
+  <section class="showcase" data-i18n-attr="aria-label" data-i18n="video.aria" aria-label="Vidéo Vision Bleu">
+    <div class="showcase-frame">
+      <video
+        id="vb-video"
+        class="showcase-video"
+        src="assets/video/showcase.mp4"
+        poster="assets/video/showcase-poster.jpg"
+        muted
+        loop
+        autoplay
+        playsinline
+        webkit-playsinline
+        preload="metadata"></video>
+      <button
+        type="button"
+        id="vb-video-sound"
+        class="showcase-sound"
+        aria-pressed="false"
+        data-i18n-attr="aria-label"
+        data-i18n="video.soundAria"
+        aria-label="Activer ou couper le son de la vidéo">
+        <span class="showcase-badge">
+          <svg class="ic-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <line x1="23" y1="9" x2="17" y2="15"/>
+            <line x1="17" y1="9" x2="23" y2="15"/>
+          </svg>
+          <svg class="ic-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+          </svg>
+          <span class="showcase-sound-label" data-i18n="video.soundOff">Touchez pour le son</span>
+        </span>
+      </button>
+    </div>
+  </section>
+
   <!-- Hero — real Vision Bleu logo sits in the light spill -->
   <header class="hero">
     <img
@@ -1365,46 +1407,6 @@
     <!-- Region caption INSIDE the grid — spans all 5 columns so it sits
          directly below the stats with minimal gap -->
     <p class="stats-regions" data-i18n="stats.regionsCaption">Montréal · Gatineau · Trois-Rivières</p>
-  </section>
-
-  <!-- Showcase video — autoplays muted + looping on load; tap toggles sound.
-       To swap: run scripts/update-video.sh <google-drive-link>, then redeploy. -->
-  <section class="showcase" data-i18n-attr="aria-label" data-i18n="video.aria" aria-label="Vidéo Vision Bleu">
-    <div class="showcase-frame">
-      <video
-        id="vb-video"
-        class="showcase-video"
-        src="assets/video/showcase.mp4"
-        poster="assets/video/showcase-poster.jpg"
-        muted
-        loop
-        autoplay
-        playsinline
-        webkit-playsinline
-        preload="metadata"></video>
-      <button
-        type="button"
-        id="vb-video-sound"
-        class="showcase-sound"
-        aria-pressed="false"
-        data-i18n-attr="aria-label"
-        data-i18n="video.soundAria"
-        aria-label="Activer ou couper le son de la vidéo">
-        <span class="showcase-badge">
-          <svg class="ic-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-            <line x1="23" y1="9" x2="17" y2="15"/>
-            <line x1="17" y1="9" x2="23" y2="15"/>
-          </svg>
-          <svg class="ic-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
-          </svg>
-          <span class="showcase-sound-label" data-i18n="video.soundOff">Touchez pour le son</span>
-        </span>
-      </button>
-    </div>
   </section>
 
   <!-- Links -->
