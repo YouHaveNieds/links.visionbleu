@@ -16,3 +16,6 @@ Thumbs.db
 # belt-and-suspenders in case someone copies it in.
 scripts/.cache/
 .visionbleu-cache/
+
+# Raw video sources (converted to assets/video/showcase.mp4 — never commit the heavy original)
+assets/video/_src*

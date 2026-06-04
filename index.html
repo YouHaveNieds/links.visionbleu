@@ -444,7 +444,7 @@
     align-items: center;
     gap: 0;
     max-width: 480px;
-    margin: 12px auto 24px;
+    margin: 12px auto 4px;
     padding: 18px 8px 8px;
     position: relative;
     opacity: 0;
@@ -471,7 +471,7 @@
   }
 
   @media (max-width: 480px) {
-    .stats-regions { font-size: 0.625rem; letter-spacing: 0.18em; margin-bottom: 24px; }
+    .stats-regions { font-size: 0.625rem; letter-spacing: 0.18em; margin-bottom: 6px; }
   }
 
   /* Hairline dividers — glow with current LED color */
@@ -544,13 +544,121 @@
   @media (max-width: 480px) {
     .stats {
       max-width: 100%;
-      margin: 36px auto 48px;
-      padding: 24px 4px;
+      margin: 12px auto 10px;
+      padding: 14px 4px 4px;
     }
     .stat-num { font-size: 2rem; }
     .stat-caption { font-size: 0.5625rem; letter-spacing: 0.2em; }
     .stats::before,
     .stats::after { height: 46px; }
+  }
+
+  /* =========================================================
+     SHOWCASE VIDEO — sits directly under the stats plaque.
+     Autoplays muted + looping on load; tap toggles sound.
+     ========================================================= */
+  .showcase {
+    max-width: 480px;
+    margin: 6px auto 2px;
+    padding: 0 20px;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fade-up 1000ms cubic-bezier(0.2, 0, 0, 1) 2200ms forwards;
+  }
+
+  .showcase-frame {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    aspect-ratio: 9 / 16;
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #05060c;
+    border: 1px solid rgba(var(--led-r), var(--led-g), var(--led-b), 0.28);
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+      0 18px 50px rgba(0, 0, 0, 0.55),
+      0 0 38px rgba(var(--led-r), var(--led-g), var(--led-b), 0.18);
+    transition:
+      border-color 1600ms cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 1600ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .showcase-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #05060c;
+  }
+
+  /* Full-frame transparent button — tap ANYWHERE on the video to toggle sound.
+     Keeps the whole clip a single, accessible, keyboard-focusable control. */
+  .showcase-sound {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    margin: 0;
+    padding: 0 0 14px;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .showcase-sound:focus-visible {
+    outline: 2px solid rgba(var(--led-r), var(--led-g), var(--led-b), 0.9);
+    outline-offset: -3px;
+  }
+
+  .showcase-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(8, 10, 18, 0.62);
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+    transition: opacity 400ms ease, transform 400ms ease;
+  }
+  .showcase-badge svg {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+    stroke: var(--text-primary);
+  }
+  .showcase-sound-label {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    white-space: nowrap;
+  }
+
+  /* Icon swap: muted shows the "off" icon + label; sound-on shrinks to a
+     speaker icon so it stays a discoverable mute toggle. */
+  .showcase-sound .ic-on { display: none; }
+  .showcase-sound.is-on .ic-off { display: none; }
+  .showcase-sound.is-on .ic-on { display: block; }
+  .showcase-sound.is-on .showcase-sound-label { display: none; }
+  .showcase-sound.is-on .showcase-badge { padding: 8px; gap: 0; }
+
+  @media (max-width: 480px) {
+    .showcase { margin: 4px auto 2px; }
+    .showcase-frame { max-width: 280px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .showcase { animation: none; opacity: 1; transform: none; }
   }
 
   /* =========================================================
@@ -560,7 +668,7 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
-    margin-top: 16px;
+    margin-top: 0;
   }
 
   .section {
@@ -1259,6 +1367,46 @@
     <p class="stats-regions" data-i18n="stats.regionsCaption">Montréal · Gatineau · Trois-Rivières</p>
   </section>
 
+  <!-- Showcase video — autoplays muted + looping on load; tap toggles sound.
+       To swap: run scripts/update-video.sh <google-drive-link>, then redeploy. -->
+  <section class="showcase" data-i18n-attr="aria-label" data-i18n="video.aria" aria-label="Vidéo Vision Bleu">
+    <div class="showcase-frame">
+      <video
+        id="vb-video"
+        class="showcase-video"
+        src="assets/video/showcase.mp4"
+        poster="assets/video/showcase-poster.jpg"
+        muted
+        loop
+        autoplay
+        playsinline
+        webkit-playsinline
+        preload="metadata"></video>
+      <button
+        type="button"
+        id="vb-video-sound"
+        class="showcase-sound"
+        aria-pressed="false"
+        data-i18n-attr="aria-label"
+        data-i18n="video.soundAria"
+        aria-label="Activer ou couper le son de la vidéo">
+        <span class="showcase-badge">
+          <svg class="ic-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <line x1="23" y1="9" x2="17" y2="15"/>
+            <line x1="17" y1="9" x2="23" y2="15"/>
+          </svg>
+          <svg class="ic-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+          </svg>
+          <span class="showcase-sound-label" data-i18n="video.soundOff">Touchez pour le son</span>
+        </span>
+      </button>
+    </div>
+  </section>
+
   <!-- Links -->
   <nav class="sections" data-i18n-attr="aria-label" data-i18n="nav.aria" aria-label="Liens rapides">
 
@@ -1505,6 +1653,9 @@
         'stats.regions':           'Régions',
         'stats.years':             'Années',
         'stats.regionsCaption':    'Montréal · Gatineau · Trois-Rivières',
+        'video.aria':              'Vidéo Vision Bleu',
+        'video.soundAria':         'Activer ou couper le son de la vidéo',
+        'video.soundOff':          'Touchez pour le son',
         'page.description':        "Vision Bleu LED installe des syst\u00e8mes d\u2019\u00e9clairage permanent pour maisons et b\u00e2timents commerciaux \u00e0 Montr\u00e9al, Gatineau et Trois-Rivi\u00e8res.",
         'nav.aria':                'Liens rapides',
         'sections.start':          'Commencer ici',
@@ -1543,6 +1694,9 @@
         'stats.regions':           'Regions',
         'stats.years':             'Years',
         'stats.regionsCaption':    'Montreal · Gatineau · Trois-Rivières',
+        'video.aria':              'Vision Bleu video',
+        'video.soundAria':         'Turn the video sound on or off',
+        'video.soundOff':          'Tap for sound',
         'page.description':        "Vision Bleu LED installs permanent lighting systems for homes and commercial buildings in Montr\u00e9al, Gatineau, and Trois-Rivi\u00e8res.",
         'nav.aria':                'Quick links',
         'sections.start':          'Start here',
@@ -2065,6 +2219,31 @@
     "@id": "https://links.visionbleu.com/#visionbleumtl"
   }
 }
+</script>
+
+<!-- Showcase video — tap anywhere on the clip to toggle sound -->
+<script>
+  (function () {
+    var v = document.getElementById('vb-video');
+    var btn = document.getElementById('vb-video-sound');
+    if (!v || !btn) return;
+
+    // Nudge autoplay (muted) in case the browser deferred it.
+    function tryPlay() {
+      var p = v.play();
+      if (p && typeof p.catch === 'function') p.catch(function () {});
+    }
+    tryPlay();
+
+    btn.addEventListener('click', function () {
+      v.muted = !v.muted;
+      v.volume = 1;
+      if (!v.muted) tryPlay();      // unmuting counts as a user gesture
+      var on = !v.muted;
+      btn.classList.toggle('is-on', on);
+      btn.setAttribute('aria-pressed', String(on));
+    });
+  })();
 </script>
 
 </body>
