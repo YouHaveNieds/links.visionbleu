@@ -1158,9 +1158,9 @@
   .temp-orb {
     position: absolute;
     top: 50%;
-    left: calc(100% - 31px); /* default cool — over right snowflake */
-    width: 22px;
-    height: 22px;
+    left: calc(100% - 21px); /* default cool — centered over right snowflake */
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     background: radial-gradient(circle at 35% 30%, var(--led-core), var(--led) 55%, var(--led-deep) 100%);
     box-shadow:
@@ -1175,7 +1175,7 @@
     pointer-events: none;
   }
   .temp-dimmer[data-temp="warm"] .temp-orb {
-    left: 9px; /* warm — over left sun */
+    left: 5px; /* warm — centered over left sun, symmetric 5px margin */
   }
 
   /* =========================================================
