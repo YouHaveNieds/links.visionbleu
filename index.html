@@ -73,14 +73,14 @@
      cross-fade between warm and cool actually blend through intermediate
      temperatures instead of flipping.
      ========================================================= */
-  @property --led-r      { syntax: '<number>'; inherits: true; initial-value: 143; }
-  @property --led-g      { syntax: '<number>'; inherits: true; initial-value: 220; }
-  @property --led-b      { syntax: '<number>'; inherits: true; initial-value: 239; }
-  @property --led-deep-r { syntax: '<number>'; inherits: true; initial-value: 73;  }
-  @property --led-deep-g { syntax: '<number>'; inherits: true; initial-value: 179; }
-  @property --led-deep-b { syntax: '<number>'; inherits: true; initial-value: 208; }
-  @property --led-core   { syntax: '<color>';  inherits: true; initial-value: #e6f8ff; }
-  @property --led        { syntax: '<color>';  inherits: true; initial-value: #8fdcef; }
+  @property --led-r      { syntax: '<number>'; inherits: true; initial-value: 255; }
+  @property --led-g      { syntax: '<number>'; inherits: true; initial-value: 179; }
+  @property --led-b      { syntax: '<number>'; inherits: true; initial-value: 102; }
+  @property --led-deep-r { syntax: '<number>'; inherits: true; initial-value: 216; }
+  @property --led-deep-g { syntax: '<number>'; inherits: true; initial-value: 126; }
+  @property --led-deep-b { syntax: '<number>'; inherits: true; initial-value: 30;  }
+  @property --led-core   { syntax: '<color>';  inherits: true; initial-value: #ffe5c0; }
+  @property --led        { syntax: '<color>';  inherits: true; initial-value: #ffb366; }
 
   :root {
     --night:          #020309;
@@ -90,16 +90,16 @@
     --border:         rgba(255, 255, 255, 0.08);
     --border-strong:  rgba(255, 255, 255, 0.18);
 
-    /* ---- Cool white 5000K (default) ---- */
-    --led:            #8fdcef;
-    --led-core:       #e6f8ff;
-    --led-r:          143;
-    --led-g:          220;
-    --led-b:          239;
-    --led-deep:       #49b3d0;
-    --led-deep-r:     73;
-    --led-deep-g:     179;
-    --led-deep-b:     208;
+    /* ---- Warm 2700K (permanent) ---- */
+    --led:            #ffb366;
+    --led-core:       #ffe5c0;
+    --led-r:          255;
+    --led-g:          179;
+    --led-b:          102;
+    --led-deep:       #d87e1e;
+    --led-deep-r:     216;
+    --led-deep-g:     126;
+    --led-deep-b:     30;
     --gold:           #c8a44e;
 
     --text-primary:   #f4f6fa;
@@ -110,34 +110,6 @@
     --serif: 'Fraunces', Georgia, serif;
 
     --radius-btn: 10px;
-  }
-
-  /* ---- Warm mode — warmer, almost gold ---- */
-  body.warm-mode {
-    --led:            #ffb366;
-    --led-core:       #ffe5c0;
-    --led-r:          255;
-    --led-g:          179;
-    --led-b:          102;
-    --led-deep:       #d87e1e;
-    --led-deep-r:     216;
-    --led-deep-g:     126;
-    --led-deep-b:     30;
-  }
-
-  /* The actual cross-fade — transition the registered props on the body.
-     Everything downstream (bar, spill, hairlines, orb) inherits the
-     interpolated values frame by frame. 1600ms premium pace. */
-  body {
-    transition:
-      --led-r      1600ms cubic-bezier(0.4, 0, 0.2, 1),
-      --led-g      1600ms cubic-bezier(0.4, 0, 0.2, 1),
-      --led-b      1600ms cubic-bezier(0.4, 0, 0.2, 1),
-      --led-deep-r 1600ms cubic-bezier(0.4, 0, 0.2, 1),
-      --led-deep-g 1600ms cubic-bezier(0.4, 0, 0.2, 1),
-      --led-deep-b 1600ms cubic-bezier(0.4, 0, 0.2, 1),
-      --led-core   1600ms cubic-bezier(0.4, 0, 0.2, 1),
-      --led        1600ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -386,7 +358,7 @@
   /* =========================================================
      IDENTITY BLOCK — V1: HORIZONTAL CAPTION
      Row 1: logo + divider + tagline on one compact line.
-     Row 2: inline stats ribbon + dimmer pill. Cities as a micro caption.
+     Row 2: inline stats ribbon. Cities as a micro caption.
      Internally width-capped to 390px so it stays tight inside the
      shared 480px .container without touching the video/sections below.
      ========================================================= */
@@ -473,9 +445,8 @@
   }
 
   /* =========================================================
-     META ROW — inline stats ribbon + dimmer on one line.
-     Compact horizontal layout (V1). No big serif numbers — weight
-     contrast carries the hierarchy instead.
+     META ROW — inline stats ribbon. Compact horizontal layout (V1).
+     No big serif numbers — weight contrast carries the hierarchy instead.
      ========================================================= */
   .stats {
     max-width: 390px;
@@ -1051,138 +1022,6 @@
   }
 
   /* =========================================================
-     TEMPERATURE DIMMER — compact toggle (V1).
-     A small pill with a visible state label so a first-time visitor
-     instantly reads it as "tap to switch warm / cold white".
-     The WHOLE label + pill is one button = big tap target.
-     ========================================================= */
-  .temp-dimmer {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 5px;
-    padding: 4px;
-    margin: 0;
-    border: 0;
-    background: transparent;
-    cursor: pointer;
-    font-family: var(--sans);
-    -webkit-tap-highlight-color: transparent;
-    -webkit-appearance: none;
-    appearance: none;
-    flex-shrink: 0;
-  }
-  .temp-dimmer:focus { outline: none; }
-  .temp-dimmer:active { outline: none; }
-  .temp-dimmer:focus-visible {
-    outline: 2px solid rgba(var(--led-r), var(--led-g), var(--led-b), 0.85);
-    outline-offset: 3px;
-    border-radius: 10px;
-  }
-
-  /* Visible state label — the JS sets "2700K · CHAUD" / "5000K · FROID".
-     A small ⇄ swap glyph signals the control flips between two states. */
-  .temp-label {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    /* Fixed width = the wider "2700K · CHAUD" state (+buffer) so the label and
-       pill never resize when toggling between CHAUD / FROID. */
-    width: 104px;
-    font-size: 0.58rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #f4f6fa;
-    white-space: nowrap;
-    text-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.9),
-      0 0 12px rgba(0, 0, 0, 0.75);
-    font-variant-numeric: tabular-nums;
-    transition: color 1600ms cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  /* The swap hint glyph, injected before the label text */
-  .temp-label::before {
-    content: "⇄";
-    font-size: 0.85em;
-    font-weight: 700;
-    color: rgba(var(--led-r), var(--led-g), var(--led-b), 0.95);
-    text-shadow: 0 0 8px rgba(var(--led-r), var(--led-g), var(--led-b), 0.55);
-    transition: color 1600ms cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* The track — a compact hairline dimmer */
-  .temp-track {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 104px;            /* match the fixed-width label above */
-    height: 28px;
-    padding: 0 6px;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.10);
-    background:
-      linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.28) 100%);
-    box-shadow:
-      inset 0 2px 3px rgba(0, 0, 0, 0.65),
-      0 1px 0 rgba(255, 255, 255, 0.05);
-    transition: border-color 400ms ease, box-shadow 400ms ease;
-    overflow: visible;
-  }
-  .temp-dimmer:hover .temp-track,
-  .temp-dimmer:focus-visible .temp-track {
-    border-color: rgba(255, 255, 255, 0.18);
-    box-shadow:
-      inset 0 2px 3px rgba(0, 0, 0, 0.65),
-      0 0 18px rgba(var(--led-r), var(--led-g), var(--led-b), 0.2);
-  }
-
-  /* Sun (warm) + snowflake (cool) icons flanking the track */
-  .temp-icon {
-    position: relative;
-    z-index: 2;
-    width: 13px;
-    height: 13px;
-    color: var(--text-muted);
-    transition: color 700ms ease, filter 700ms ease;
-    flex-shrink: 0;
-  }
-  .temp-dimmer[data-temp="cool"] .temp-icon-cool {
-    color: var(--led-core);
-    filter: drop-shadow(0 0 4px rgba(var(--led-r), var(--led-g), var(--led-b), 0.8));
-  }
-  .temp-dimmer[data-temp="warm"] .temp-icon-warm {
-    color: var(--led-core);
-    filter: drop-shadow(0 0 4px rgba(var(--led-r), var(--led-g), var(--led-b), 0.8));
-  }
-
-  /* The sliding orb — the "light source" on the dimmer */
-  .temp-orb {
-    position: absolute;
-    top: 50%;
-    left: calc(100% - 21px); /* default cool — centered over right snowflake */
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, var(--led-core), var(--led) 55%, var(--led-deep) 100%);
-    box-shadow:
-      0 0 10px rgba(var(--led-r), var(--led-g), var(--led-b), 0.75),
-      0 0 22px rgba(var(--led-r), var(--led-g), var(--led-b), 0.45),
-      inset 0 2px 2px rgba(255, 255, 255, 0.55);
-    transform: translate(0, -50%);
-    transition:
-      left 1600ms cubic-bezier(0.4, 0, 0.2, 1),
-      background 1600ms cubic-bezier(0.4, 0, 0.2, 1),
-      box-shadow 1600ms cubic-bezier(0.4, 0, 0.2, 1);
-    pointer-events: none;
-  }
-  .temp-dimmer[data-temp="warm"] .temp-orb {
-    left: 5px; /* warm — centered over left sun, symmetric 5px margin */
-  }
-
-  /* =========================================================
      LANGUAGE TOGGLE — FR / EN, top right
      Opacity 1 from the start — don't hide behind fade animations.
      Respects iOS safe-area insets so it's never clipped by notches
@@ -1258,7 +1097,7 @@
   }
 </style>
 </head>
-<body class="warm-mode">
+<body>
 
 <!-- Language toggle — FR / EN, top right -->
 <div class="lang-toggle" role="group" aria-label="Language selector / Sélecteur de langue">
@@ -1325,7 +1164,7 @@
 
   <!-- Identity block — V1 horizontal caption.
        Row 1: logo + divider + tagline on one line.
-       Row 2: inline stats ribbon + dimmer pill. Cities as a micro caption. -->
+       Row 2: inline stats ribbon. Cities as a micro caption. -->
   <header class="hero">
 
     <!-- Row 1: logo + divider + tagline -->
@@ -1343,8 +1182,8 @@
       <h1 class="hero-tagline" data-i18n="hero.tagline">Leader canadien de l'éclairage permanent</h1>
     </div>
 
-    <!-- Row 2: inline stats ribbon + temperature dimmer -->
-    <div class="meta-row">
+    <!-- Row 2: inline stats ribbon -->
+    <div class="meta-row" style="justify-content: center;">
       <div class="stats">
         <div class="stats-inline" data-i18n-attr="aria-label" data-i18n="stats.aria" aria-label="Vision Bleu en chiffres" role="group">
           <div class="stat-item">
@@ -1364,44 +1203,6 @@
         </div>
         <p class="stats-regions" data-i18n="stats.regionsCaption">Montréal · Gatineau · Trois-Rivières</p>
       </div>
-
-      <!-- Light temperature dimmer — visible label + pill, whole thing clickable.
-           5000K cool (snowflake, right) ↔ 2700K warm (sun, left, default). -->
-      <button
-        type="button"
-        id="temp-dimmer"
-        class="temp-dimmer"
-        data-temp="warm"
-        aria-label="Changer la température de la lumière : actuellement 2700K chaud"
-      >
-        <span class="temp-label" id="temp-label">2700K · CHAUD</span>
-        <span class="temp-track">
-          <!-- WARM (Sun — Phosphor style) — LEFT side, matches warm-mode orb -->
-          <svg class="temp-icon temp-icon-warm" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="128" cy="128" r="52"/>
-            <line x1="128" y1="32" x2="128" y2="16"/>
-            <line x1="128" y1="240" x2="128" y2="224"/>
-            <line x1="32" y1="128" x2="16" y2="128"/>
-            <line x1="240" y1="128" x2="224" y2="128"/>
-            <line x1="60" y1="60" x2="48" y2="48"/>
-            <line x1="208" y1="208" x2="196" y2="196"/>
-            <line x1="196" y1="60" x2="208" y2="48"/>
-            <line x1="48" y1="208" x2="60" y2="196"/>
-          </svg>
-          <span class="temp-orb" aria-hidden="true"></span>
-          <!-- COOL (Snowflake — Phosphor style) — RIGHT side, matches cool-mode orb -->
-          <svg class="temp-icon temp-icon-cool" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="128" y1="24" x2="128" y2="232"/>
-            <line x1="24" y1="128" x2="232" y2="128"/>
-            <line x1="54" y1="54" x2="202" y2="202"/>
-            <line x1="202" y1="54" x2="54" y2="202"/>
-            <polyline points="96 48 128 16 160 48"/>
-            <polyline points="96 208 128 240 160 208"/>
-            <polyline points="48 96 16 128 48 160"/>
-            <polyline points="208 96 240 128 208 160"/>
-          </svg>
-        </span>
-      </button>
     </div>
 
   </header>
@@ -1556,84 +1357,6 @@
 
 <script>
   // =========================================================
-  // TEMPERATURE DIMMER — 5000K cool ↔ 2700K warm
-  // Persists choice in localStorage
-  // =========================================================
-  (function () {
-    var KEY = 'vb-light-temp';
-    var body = document.body;
-    var dimmer = document.getElementById('temp-dimmer');
-    var label = document.getElementById('temp-label');
-    if (!dimmer || !label) return;
-
-    var LABELS_FALLBACK = {
-      cool: '5000K · FROID',
-      warm: '2700K · CHAUD'
-    };
-    var ARIA_FALLBACK = {
-      cool: 'Changer la température de la lumière : actuellement 5000K froid',
-      warm: 'Changer la température de la lumière : actuellement 2700K chaud'
-    };
-
-    function getLangLabel(state) {
-      // Use i18n translations if available (set by applyLang)
-      if (window.__vbTranslations) {
-        var key = state === 'cool' ? 'temp.cool' : 'temp.warm';
-        if (window.__vbTranslations[key]) return window.__vbTranslations[key];
-      }
-      return LABELS_FALLBACK[state];
-    }
-
-    function getLangAria(state) {
-      if (window.__vbTranslations) {
-        var key = state === 'cool' ? 'temp.coolAria' : 'temp.warmAria';
-        if (window.__vbTranslations[key]) return window.__vbTranslations[key];
-      }
-      return ARIA_FALLBACK[state];
-    }
-
-    function setState(state) {
-      if (state === 'warm') {
-        body.classList.add('warm-mode');
-      } else {
-        body.classList.remove('warm-mode');
-      }
-      dimmer.setAttribute('data-temp', state);
-      dimmer.setAttribute('aria-label', getLangAria(state));
-      label.textContent = getLangLabel(state);
-    }
-
-    // Every page load: start warm, then auto-demo cool transition.
-    // This teaches the interaction — users see the slider move and the color
-    // shift, so they understand the toggle is interactive.
-    setState('warm');
-
-    var autoSwitchCancelled = false;
-    var autoSwitchTimer = null;
-
-    // Ignition duration = 1400ms animation + 200ms delay = 1600ms total.
-    // Pause 1800ms so the eye fully lands on the warm scene — premium,
-    // unhurried. Then trigger the transition (CSS handles the 1600ms
-    // cross-fade so the whole reveal from finish-ignition to settled-cool
-    // takes ~3.4s).
-    var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    autoSwitchTimer = setTimeout(function () {
-      if (autoSwitchCancelled || prefersReducedMotion) return;
-      setState('cool');
-    }, 3400);
-
-    dimmer.addEventListener('click', function () {
-      // First user click cancels the auto-demo so it doesn't fight them.
-      autoSwitchCancelled = true;
-      if (autoSwitchTimer) { clearTimeout(autoSwitchTimer); autoSwitchTimer = null; }
-
-      var next = dimmer.getAttribute('data-temp') === 'cool' ? 'warm' : 'cool';
-      setState(next);
-      try { localStorage.setItem(KEY, next); } catch (e) {}
-    });
-  })();
-
-  // =========================================================
   // i18n — FR / EN language toggle
   // Default = French. Persists in localStorage.
   // =========================================================
@@ -1677,11 +1400,7 @@
         'phone.aria':              'Appelez Vision Bleu LED au 450-999-7258',
         'socials.aria':            'Réseaux sociaux',
         'socials.email':           'Écrivez-nous',
-        'socials.website':         'Visitez notre site web',
-        'temp.cool':               '5000K · FROID',
-        'temp.warm':               '2700K · CHAUD',
-        'temp.coolAria':           'Changer la température de la lumière : actuellement 5000K froid',
-        'temp.warmAria':           'Changer la température de la lumière : actuellement 2700K chaud'
+        'socials.website':         'Visitez notre site web'
       },
       en: {
         'meta.title':              'Vision Bleu LED | Links',
@@ -1718,11 +1437,7 @@
         'phone.aria':              'Call Vision Bleu LED at 450-999-7258',
         'socials.aria':            'Social media',
         'socials.email':           'Email us',
-        'socials.website':         'Visit our website',
-        'temp.cool':               '5000K · COOL',
-        'temp.warm':               '2700K · WARM',
-        'temp.coolAria':           'Change light temperature: currently 5000K cool',
-        'temp.warmAria':           'Change light temperature: currently 2700K warm'
+        'socials.website':         'Visit our website'
       }
     };
 
@@ -1752,23 +1467,10 @@
       var dict = translations[lang];
       if (!dict) return;
 
-      // Expose current translations for temp dimmer + any other dynamic JS
+      // Expose current translations for any dynamic JS
       window.__vbTranslations = dict;
 
       document.documentElement.setAttribute('lang', lang);
-
-      // Update temp dimmer labels if it's already initialized
-      var dimmer = document.getElementById('temp-dimmer');
-      if (dimmer) {
-        var currentState = dimmer.getAttribute('data-temp') || 'warm';
-        var tempLabel = document.getElementById('temp-label');
-        if (tempLabel && dict['temp.' + currentState]) {
-          tempLabel.textContent = dict['temp.' + currentState];
-        }
-        if (dict['temp.' + currentState + 'Aria']) {
-          dimmer.setAttribute('aria-label', dict['temp.' + currentState + 'Aria']);
-        }
-      }
 
       var nodes = document.querySelectorAll('[data-i18n]');
       nodes.forEach(function (node) {
@@ -1828,7 +1530,6 @@
   // =========================================================
   // PROJECT MAP — lazy-loaded MapLibre embed
   // Loads only when the "Voir notre carte" button is clicked.
-  // Pins cross-fade in sync with the LED temperature dimmer.
   // =========================================================
   (function () {
     var MAPLIBRE_JS  = 'https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js';
@@ -1850,7 +1551,6 @@
 
     var mapLoaded = false;
     var maplibreLoadingPromise = null;
-    var pinSyncRaf = null;
 
     function loadMapLibre() {
       if (window.maplibregl) return Promise.resolve();
@@ -1911,49 +1611,6 @@
         return FALLBACK_PIN_COLOR;
       }
     }
-
-    function syncPinColor() {
-      var map = window._vbMap;
-      if (!map || !map.loaded || !map.loaded()) return;
-      if (!map.getLayer('unclustered-point')) return;
-      var color = getCurrentLedColor();
-      try {
-        map.setPaintProperty('clusters', 'circle-color', color);
-        map.setPaintProperty('clusters', 'circle-stroke-color', color);
-        map.setPaintProperty('unclustered-point', 'circle-color', color);
-        map.setPaintProperty('unclustered-point', 'circle-stroke-color', color);
-      } catch (e) { /* silent */ }
-    }
-
-    // Drive the pin color for ~1800ms (slightly longer than the 1600ms CSS
-    // transition) so we capture the full cross-fade, then settle.
-    function startPinSync() {
-      if (pinSyncRaf) cancelAnimationFrame(pinSyncRaf);
-      var startTime = performance.now();
-      function tick(now) {
-        syncPinColor();
-        if (now - startTime < 1800) {
-          pinSyncRaf = requestAnimationFrame(tick);
-        } else {
-          pinSyncRaf = null;
-          syncPinColor(); // final settle
-        }
-      }
-      pinSyncRaf = requestAnimationFrame(tick);
-    }
-
-    // Watch for the body class change (warm-mode on/off) which signals
-    // a temperature toggle. The temp-dimmer IIFE is a closure so we can't
-    // hook it directly — MutationObserver on body[class] is the clean way.
-    var bodyObserver = new MutationObserver(function (mutations) {
-      for (var i = 0; i < mutations.length; i++) {
-        if (mutations[i].attributeName === 'class') {
-          startPinSync();
-          break;
-        }
-      }
-    });
-    bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 
     function initMap(geojson, total) {
       var map = new maplibregl.Map({
@@ -2070,9 +1727,6 @@
             'text-halo-width': 1
           }
         });
-
-        // Initial sync so pins match the current temperature
-        syncPinColor();
 
         // Click cluster → zoom in
         map.on('click', 'clusters', function (e) {
